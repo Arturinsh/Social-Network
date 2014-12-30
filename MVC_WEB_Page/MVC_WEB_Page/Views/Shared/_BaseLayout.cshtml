@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title </title>
+    
+    <script src="~/Scripts/jquery-ui-1.11.2.min.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body class="bodyBg">
+    <!-- Horizontal menu-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Home"><span class="glyphicon glyphicon-home"></span></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="\Gallery">Gallery</a></li>
+                    <li><a href="\Friends">Friends</a></li>
+                    <li><a href="\Interests">Interests</a></li>
+                    <li><a href="\Messages">Messages</a></li>
+                    
+                </ul>
+  
+                     @Html.Partial("_LoginPartialMod1")
+>
+            </div>
+        </div>
+    </nav>
+
+
+    <!--Horizontal menu end-->
+
+
+
+
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+
+        <div class="row baseFooter">
+            <div class="col-md-12 ">
+                <p class="baseFootertext">&copy; @DateTime.Now.Year - Nova</p>
+            </div>
+        </div>
+    </div>
+ 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+   
+    @RenderSection("scripts", required: false)
+
+    
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+@*
+        <h2>@ViewBag.Title.</h2>
+        <h3>@ViewBag.Message</h3>
+
+    <p>Home page template.</p>
+*@
+<div class="row baseMainRow">
+    
+    @foreach (var item in Model){
+    
+    
+
+    <div class="col-md-3 leftBlock">
+        @using Microsoft.AspNet.Identity
+        <h3> @item.Name @item.Surname </h3>
+        <hr />
+  
+
+        
+        <img src="~/Content/Images/Profiles/@item.Image" class="img-responsive userImage" />
+        
+        
+        <div class="btn-group-vertical userUnderImageMenu">
+            <button type="button" class="btn btn-default baseBtn">1</button>
+            <button type="button" class="btn btn-default baseBtn">2</button>
+            <button type="button" class="btn btn-default baseBtn">3</button>
+        </div>
+    </div><!-- first column end-->
+    <div class="col-md-7 centralBlock">
+    <hr class="hrCentralBlock"/>
+        <div class="jumbotron">
+            <h1>Some info here!</h1>
+            <p>Text text text....</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-12"> sssss</div>
+            <div class="col-lg-12"> sssss</div>
+            <div class="col-lg-12"> sssss</div>
+        </div>
+    </div><!-- second column end-->
+    <div class="col-md-2 rightBlock">
+        <hr class="hrCentralBlock" />
+        some info here
+
+
+    </div><!-- third column end-->
+    }
+</div><!--Row end-->
+    
