@@ -184,8 +184,17 @@
     <Compile Include="Migrations\201412300548435_ImageField.Designer.cs">
       <DependentUpon>201412300548435_ImageField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412301418285_Friends.cs" />
+    <Compile Include="Migrations\201412301418285_Friends.Designer.cs">
+      <DependentUpon>201412301418285_Friends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412301504162_Friends1.cs" />
+    <Compile Include="Migrations\201412301504162_Friends1.Designer.cs">
+      <DependentUpon>201412301504162_Friends1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Friends.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -434,6 +443,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412300548435_ImageField.resx">
       <DependentUpon>201412300548435_ImageField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412301418285_Friends.resx">
+      <DependentUpon>201412301418285_Friends.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412301504162_Friends1.resx">
+      <DependentUpon>201412301504162_Friends1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

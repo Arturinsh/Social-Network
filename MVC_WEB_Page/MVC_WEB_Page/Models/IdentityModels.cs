@@ -41,5 +41,7 @@ namespace MVC_WEB_Page.Models
         {
             return new ApplicationDbContext();
         }
-    }
-}
+        public DbSet<Friends> Friends { get; set; }
+    }//<-- 
+    
+}//<-- namespace end

@@ -136,4 +136,13 @@ textarea {
     width:100%;
 
 }
+/*user friends*/
+.userImgHeight{
+  min-height:20em;
 
+    background-color:#efefef;  
+}
+.userImg{
+    min-height:15em;
+    vertical-align: middle;
+}

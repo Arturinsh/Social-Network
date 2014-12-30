@@ -22,7 +22,6 @@ namespace MVC_WEB_Page.Controllers
         [Authorize]
         public ActionResult Home()
         {
-
             var currentUserId = User.Identity.GetUserId();
            // var db = new DefaultConnection();
             
@@ -42,30 +41,52 @@ namespace MVC_WEB_Page.Controllers
             return View(user);
         }//<-- about end
 
+         [Authorize]
         public ActionResult Friends()
         {
-            ViewBag.Message = "Your contact page.";
+            var currentUserId = User.Identity.GetUserId();
+            // var db = new DefaultConnection();
 
-            return View();
+            var context = new ApplicationDbContext();
+            string match = User.Identity.GetUserId();
+            var friends = from a in context.Friends where a.IdUser == match select a;
+            //var allUsers = context.Users.ToList();
+            List<ApplicationUser> allUsers = new List<ApplicationUser>();
+            foreach (var item in friends)
+            {
+                var context1 = new ApplicationDbContext();
+                var user = from a in context1.Users where a.Id == item.IdFriend select a;
+                foreach (var x in user)
+                {
+                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
+
+                }
+            }
+
+            return View(allUsers);
         }//<-- friends end
+         [Authorize]
         public ActionResult Interests()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }//<-- interests end
+         [Authorize]
         public ActionResult Gallery()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }//<-- GAllery end
+         [Authorize]
         public ActionResult Messages()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }//<-- messages end
+         [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
