@@ -58,7 +58,12 @@ namespace MVC_WEB_Page
             routes.MapRoute(
                name: "Messages",
                url: "Messages",
-               defaults: new { controller = "Home", action = "Messages", id = UrlParameter.Optional }
+               defaults: new { controller = "Messages", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+               name: "SendMessage",
+               url: "SendMessage",
+               defaults: new { controller = "Messages", action = "Create", id = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "Default",

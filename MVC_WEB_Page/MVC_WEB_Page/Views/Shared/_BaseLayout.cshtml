@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title </title>
     
-    <script src="~/Scripts/jquery-ui-1.11.2.min.js"></script>
 
+    
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+ 
+
+
 
 </head>
 <body class="bodyBg">
+
+  
+
+
     <!-- Horizontal menu-->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">

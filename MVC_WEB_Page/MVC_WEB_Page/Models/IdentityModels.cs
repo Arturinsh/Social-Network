@@ -42,6 +42,7 @@ namespace MVC_WEB_Page.Models
             return new ApplicationDbContext();
         }
         public DbSet<Friends> Friends { get; set; }
+        public DbSet<Messages> Messages { get; set; }
     }//<-- 
     
 }//<-- namespace end

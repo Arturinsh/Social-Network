@@ -146,3 +146,37 @@ textarea {
     min-height:15em;
     vertical-align: middle;
 }
+/*user messages*/
+.messageDes{
+    background-color:#EEEFEE;
+    min-height:3em;
+    font-weight:bold;
+    
+}
+.messageRow{
+    min-height:2em;
+    vertical-align:middle;
+   
+}
+.messageRow:hover{
+    background-color:#F9FCF8;
+    min-height:2em;
+}
+.urlNoDecoration{
+ text-decoration:none;
+    color:black;
+
+}
+.sendMessageRow{
+    margin-top:1em;
+
+}
+.submitSendMessage{
+    margin-left:15%;
+    width:100%;
+
+}
+.textboSend{
+    width:20Em;
+
+}
