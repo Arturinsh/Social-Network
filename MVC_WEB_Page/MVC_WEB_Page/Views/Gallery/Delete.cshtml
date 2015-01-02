@@ -1,0 +1,35 @@
+﻿﻿@model MVC_WEB_Page.Models.UsersGalleries
+
+@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>UsersGallery</h4>
+        <hr />
+        <div class="col-md-3 col userImgHeight">
+
+            <div class="col-md-12 userImg"><img src="~/Content/Images/@User.Identity.Name.ToString()/@Model.Image" class="img-responsive userImage" /> </div>
+            <div class="col-md-12 text-center"> @Model.Name </div>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

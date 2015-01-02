@@ -53,7 +53,12 @@ namespace MVC_WEB_Page
             routes.MapRoute(
                name: "Gallery",
                url: "Gallery",
-               defaults: new { controller = "Home", action = "Gallery", id = UrlParameter.Optional }
+               defaults: new { controller = "Gallery", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+               name: "AddGallery",
+               url: "AddGallery",
+               defaults: new { controller = "Gallery", action = "Create", id = UrlParameter.Optional }
             );
             routes.MapRoute(
                name: "Messages",

@@ -43,6 +43,7 @@ namespace MVC_WEB_Page.Models
         }
         public DbSet<Friends> Friends { get; set; }
         public DbSet<Messages> Messages { get; set; }
+        public DbSet<UsersGalleries> Galleries { get; set; }
     }//<-- 
     
 }//<-- namespace end

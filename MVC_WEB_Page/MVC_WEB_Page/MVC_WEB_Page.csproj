@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
@@ -205,6 +206,10 @@
     <Compile Include="Migrations\201412311518468_Messages2.Designer.cs">
       <DependentUpon>201412311518468_Messages2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501020251514_Galleries.cs" />
+    <Compile Include="Migrations\201501020251514_Galleries.Designer.cs">
+      <DependentUpon>201501020251514_Galleries.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Friends.cs" />
@@ -212,6 +217,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\MsgModelCreate.cs" />
+    <Compile Include="Models\UsersGalleries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -228,12 +234,17 @@
     <Content Include="Content\Images\Login_user.png" />
     <Content Include="Content\Images\roadtorecovery.jpg" />
     <Content Include="Content\Images\user-icon.png" />
+    <Content Include="Content\img\close.png" />
+    <Content Include="Content\img\loading.gif" />
+    <Content Include="Content\img\next.png" />
+    <Content Include="Content\img\prev.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
+    <Content Include="Content\lightbox.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -334,6 +345,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\less-1.4.1.min.js" />
+    <Content Include="Scripts\lightbox.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.ar.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.az.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.bg.js" />
@@ -401,7 +413,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -441,6 +455,10 @@
     <Content Include="Views\Messages\Details.cshtml" />
     <Content Include="Views\Messages\Edit.cshtml" />
     <Content Include="Views\Messages\Index.cshtml" />
+    <Content Include="Views\Gallery\Index.cshtml" />
+    <Content Include="Views\Gallery\Create.cshtml" />
+    <Content Include="Views\Gallery\Delete.cshtml" />
+    <Content Include="Views\Gallery\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -484,6 +502,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412311518468_Messages2.resx">
       <DependentUpon>201412311518468_Messages2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501020251514_Galleries.resx">
+      <DependentUpon>201501020251514_Galleries.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

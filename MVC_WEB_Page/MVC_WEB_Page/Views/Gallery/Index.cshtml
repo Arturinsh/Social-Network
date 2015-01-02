@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MVC_WEB_Page.Models.UsersGalleries>
+
+    @{
+        Layout = "~/Views/Shared/_BaseLayout.cshtml";
+    }
+
+    <!DOCTYPE HTML>
+
+    <html>
+    <head>
+        <link href="/Content/lightbox.css" rel="stylesheet" />
+       
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+
+    </head>
+    <body>
+        <p>
+            <a href="/AddGallery">Add Image</a>
+        </p>
+        <div class="row ">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-2">
+                    <a href="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" data-lightbox="galery">
+                        <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" class="img-responsive userImage" />
+                    </a>
+                    <div class="col-md-12"> <span class="glyphicon glyphicon-remove">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</span> </div>
+                </div>
+            }
+        </div>
+    </body>
+</html>

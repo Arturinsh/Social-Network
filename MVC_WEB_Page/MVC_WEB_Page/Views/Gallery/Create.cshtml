@@ -1,0 +1,46 @@
+﻿@model MVC_WEB_Page.Models.UsersGalleries
+@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    @using (Html.BeginForm("Create", "Gallery", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>UsersGallery</h4>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">File</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="picture" name="picture" type="file" value="" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>
