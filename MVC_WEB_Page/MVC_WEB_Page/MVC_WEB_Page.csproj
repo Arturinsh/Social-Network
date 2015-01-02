@@ -459,6 +459,8 @@
     <Content Include="Views\Gallery\Create.cshtml" />
     <Content Include="Views\Gallery\Delete.cshtml" />
     <Content Include="Views\Gallery\Edit.cshtml" />
+    <Content Include="Views\Home\SearchUsers.cshtml" />
+    <Content Include="Views\Shared\_SearchUsersForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

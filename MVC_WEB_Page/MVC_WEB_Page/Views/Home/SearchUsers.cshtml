@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<div class="row baseMainRow">
+
+    <div class="col-md-3 leftBlock">
+
+        <hr class="hrCentralBlock" />
+
+    </div><!-- first column end-->
+    
+    <div class="col-md-7 centralBlock">
+        <hr class="hrCentralBlock" />
+        
+      
+            @Html.Partial("_SearchUsersForm", Model)
+      
+
+            <div class="row ">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 col userImgHeight">
+
+                        <div class="col-md-12 userImg"><img src="~/Content/Images/Profiles/@item.Image" class="img-responsive userImage" /> </div>
+                        <div class="col-md-12 text-center"> @item.Name  @item.Surname </div>
+                        <div class="col-md-12"> <span class="glyphicon glyphicon-plus"></span>  <span class="glyphicon glyphicon-envelope"></span> </div>
+                    </div>
+
+                }
+            </div>
+
+
+        </div><!-- second column end-->
+    <div class="col-md-2 rightBlock">
+        <hr class="hrCentralBlock" />
+
+
+
+    </div><!-- third column end-->
+
+</div><!--Row end-->

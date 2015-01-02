@@ -44,6 +44,12 @@ namespace MVC_WEB_Page
                url: "Friends",
                defaults: new { controller = "Home", action = "Friends", id = UrlParameter.Optional }
             );
+            //<-- AllUsers
+            routes.MapRoute(
+               name: "SearchUsers",
+               url: "SearchUsers",
+               defaults: new { controller = "Home", action = "SearchUsers", id = UrlParameter.Optional }
+            );
             //<-- interests
             routes.MapRoute(
                name: "Interests",

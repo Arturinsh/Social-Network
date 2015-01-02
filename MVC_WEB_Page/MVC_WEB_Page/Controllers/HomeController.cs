@@ -34,12 +34,41 @@ namespace MVC_WEB_Page.Controllers
                  allUsers.Add(new ApplicationUser {Id=item.Id, Name=item.Name,Surname=item.Surname,Image=item.Image });
              }
            
-
-
             ViewBag.Message =  "sss";
 
             return View(user);
         }//<-- about end
+
+        [Authorize]
+        public ActionResult SearchUsers(string SearchName="")
+        {            
+            List<ApplicationUser> allUsers = new List<ApplicationUser>();            
+            var context1 = new ApplicationDbContext();
+
+            if(SearchName=="")
+            {
+                var user = from a in context1.Users select a;
+                foreach (var x in user)
+                {
+                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
+                }
+
+                return View(allUsers);
+            }
+            else
+            {
+                var user = from a in context1.Users where a.Name.StartsWith(SearchName) || a.Surname.StartsWith(SearchName) select a;
+
+                foreach (var x in user)
+                {
+                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
+                }
+
+                return View(allUsers);  
+            }
+            
+        }//<-- AllUsers
+
 
          [Authorize]
         public ActionResult Friends()
