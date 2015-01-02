@@ -52,7 +52,6 @@ namespace MVC_WEB_Page.Controllers
                 {
                     allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
                 }
-
                 return View(allUsers);
             }
             else
@@ -63,37 +62,51 @@ namespace MVC_WEB_Page.Controllers
                 {
                     allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
                 }
-
                 return View(allUsers);  
-            }
-            
-        }//<-- AllUsers
+            }            
+        }//<-- SearchUsers
 
-
-         [Authorize]
-        public ActionResult Friends()
+        [Authorize]
+        public ActionResult Friends(string SearchName = "")
         {
+            List<ApplicationUser> allUsers = new List<ApplicationUser>();
+            var context1 = new ApplicationDbContext();
             var currentUserId = User.Identity.GetUserId();
-            // var db = new DefaultConnection();
-
             var context = new ApplicationDbContext();
             string match = User.Identity.GetUserId();
-            var friends = from a in context.Friends where a.IdUser == match select a;
-            //var allUsers = context.Users.ToList();
-            List<ApplicationUser> allUsers = new List<ApplicationUser>();
-            foreach (var item in friends)
-            {
-                var context1 = new ApplicationDbContext();
-                var user = from a in context1.Users where a.Id == item.IdFriend select a;
-                foreach (var x in user)
+            context1 = new ApplicationDbContext(); 
+
+            if (SearchName == "")
+            {          
+                var friends = from a in context.Friends where a.IdUser == match select a;
+
+                foreach (var item in friends)
                 {
-                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
-
+                    var user = from a in context1.Users where a.Id == item.IdFriend select a;
+                    foreach (var x in user)
+                    {
+                        allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
+                    }
                 }
+                return View(allUsers);
             }
+            else
+            {                
+                var friends = from a in context.Friends where a.IdUser == match select a;
 
-            return View(allUsers);
-        }//<-- friends end
+                foreach (var item in friends)
+                {                   
+                    var user = from a in context1.Users where a.Id == item.IdFriend && a.Name.StartsWith(SearchName) || a.Surname.StartsWith(SearchName) select a;
+                    foreach (var x in user)
+                    {
+                        allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
+                    }
+                }
+
+                return View(allUsers);
+            }
+        }//<-- end Friends
+               
          [Authorize]
         public ActionResult Interests()
         {

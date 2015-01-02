@@ -14,6 +14,32 @@
     <div class="col-md-7 centralBlock">
         <hr class="hrCentralBlock" />
        
+        @using (Html.BeginForm("Friends", "Home"))
+        {
+            @Html.TextBox("SearchName")
+            <input type="submit" value="Search Friend" id="btn_submit" class="btn btn-primary" />
+        }
+        <br>
+        <script>
+            $(function () {
+
+                $("#btn_submit").click(function () {
+                    if ($("#SearchName").val() == "")
+
+                        alert("Enter Friend Name or Surname!");
+
+                });//click
+            });
+        </script>
+
+        @if (Model.Count() == 0)
+        {
+            <div>
+                Friend with that Name or Surname Not Found!
+            </div>
+            <br>
+        }
+
         <div class="row ">
             @foreach (var item in Model)
             {
