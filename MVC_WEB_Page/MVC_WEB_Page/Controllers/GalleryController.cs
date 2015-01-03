@@ -109,7 +109,9 @@ namespace MVC_WEB_Page.Controllers
             {
                 return HttpNotFound();
             }
-            return View(usersgallery);
+            if (usersgallery.UserId == User.Identity.GetUserId())
+                return View(usersgallery);
+            else return HttpNotFound();
         }
 
         // POST: /Gallery/Edit/5
@@ -126,7 +128,9 @@ namespace MVC_WEB_Page.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(usersgallery);
+            if (usersgallery.UserId == User.Identity.GetUserId())
+                return View(usersgallery);
+            else return HttpNotFound();
         }
 
         // GET: /Gallery/Delete/5
@@ -142,7 +146,9 @@ namespace MVC_WEB_Page.Controllers
             {
                 return HttpNotFound();
             }
-            return View(usersgallery);
+            if (usersgallery.UserId == User.Identity.GetUserId())
+                return View(usersgallery);
+            else return HttpNotFound();
         }
 
         // POST: /Gallery/Delete/5

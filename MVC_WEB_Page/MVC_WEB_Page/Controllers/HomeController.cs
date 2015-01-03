@@ -38,7 +38,18 @@ namespace MVC_WEB_Page.Controllers
 
             return View(user);
         }//<-- about end
+        [Authorize]
+        public ActionResult ReturnUser(string user)
+        {
+            var context = new ApplicationDbContext();
+            var users = from a in context.Users where a.Id == user select a;
+            var gallery = from a in context.Galleries where a.UserId == user select a;
 
+            UserView userview = new UserView();
+            userview.gallery = gallery.ToList();
+            userview.user = users.ToList().First();
+            return View(userview);
+        }
         [Authorize]
         public ActionResult AllUsers()
         {            

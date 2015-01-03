@@ -1,0 +1,34 @@
+﻿﻿@model MVC_WEB_Page.Models.UserView
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+<html>
+<head>
+    <title>@Model.user.Name  @Model.user.Surname</title>
+    <link href="/Content/lightbox.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="row baseMainRow">
+        <div class="col-md-3 leftBlock">
+            <h3>@Model.user.Name @Model.user.Surname</h3>
+            <img src="~/Content/Images/Profiles/@Model.user.Image" class="img-responsive userImage" />
+        </div>
+        <div class="col-md-7 centralBlock">
+            <hr class="hrCentralBlock" />
+            <div class="row">
+                @foreach (var item in Model.gallery)
+                {
+                    <div class="col-md-4">
+                        <a href="~/Content/Images/@Model.user.UserName/@item.Image" data-lightbox="galery" data-title=@item.Name>
+                            <img src="~/Content/Images/@Model.user.UserName/@item.Image" class="img-responsive" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

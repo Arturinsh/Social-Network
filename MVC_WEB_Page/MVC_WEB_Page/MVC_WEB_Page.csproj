@@ -219,6 +219,7 @@
     <Compile Include="Models\MsgModelCreate.cs" />
     <Compile Include="Models\MsgModelOutput.cs" />
     <Compile Include="Models\UsersGalleries.cs" />
+    <Compile Include="Models\UserView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -464,6 +465,7 @@
     <Content Include="Views\Messages\Outbox.cshtml" />
     <Content Include="Views\Shared\_DisplayUsers.cshtml" />
     <Content Include="Views\Shared\_DisplayFriends.cshtml" />
+    <Content Include="Views\Home\ReturnUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
