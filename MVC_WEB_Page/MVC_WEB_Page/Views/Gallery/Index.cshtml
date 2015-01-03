@@ -15,19 +15,26 @@
 
     </head>
     <body>
-        <p>
-            <a href="/AddGallery">Add Image</a>
-        </p>
-        <div class="row ">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-2">
-                    <a href="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" data-lightbox="galery">
-                        <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" class="img-responsive userImage" />
-                    </a>
-                    <div class="col-md-12"> <span class="glyphicon glyphicon-remove">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</span> </div>
+        <div class="row baseMainRow">
+            <div class="col-md-2 rightBlock">
+                <button onclick="location.href='/AddGallery'" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-plus"></span>Add Image</button>
+            </div><!-- third column end-->
+                <hr class="hrCentralBlock" />
+            <!-- first column end-->
+            <div class="col-md-7 centralBlock">
+                <div class="row ">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4">
+                            <a href="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" data-lightbox="galery" data-title=@item.Name>
+                                <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" class="img-responsive" />
+                            </a>
+                            <button onclick="@Url.Action("Delete", new { id = item.Id })" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-remove"></span>Delete</button>
+                        </div>
+                    }
                 </div>
-            }
+            </div><!-- second column end-->
+            
         </div>
-    </body>
+</body>
 </html>
