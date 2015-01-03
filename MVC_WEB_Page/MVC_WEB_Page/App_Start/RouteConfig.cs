@@ -40,15 +40,15 @@ namespace MVC_WEB_Page
             );
             //<-- friends
             routes.MapRoute(
-               name: "Friends",
-               url: "Friends",
-               defaults: new { controller = "Home", action = "Friends", id = UrlParameter.Optional }
+               name: "AllFriends",
+               url: "AllFriends",
+               defaults: new { controller = "Home", action = "AllFriends", id = UrlParameter.Optional }
             );
             //<-- AllUsers
             routes.MapRoute(
-               name: "SearchUsers",
-               url: "SearchUsers",
-               defaults: new { controller = "Home", action = "SearchUsers", id = UrlParameter.Optional }
+               name: "AllUsers",
+               url: "AllUsers",
+               defaults: new { controller = "Home", action = "AllUsers", id = UrlParameter.Optional }
             );
             //<-- interests
             routes.MapRoute(

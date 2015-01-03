@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+<div class="row ">
+   
+    @if (Model.Count() != 0)
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-md-3 col userImgHeight">
+
+                <div class="col-md-12 userImg"><img src="~/Content/Images/Profiles/@item.Image" class="img-responsive userImage" /> </div>
+                <div class="col-md-12 text-center"> @item.Name  @item.Surname </div>
+                <div class="col-md-12"> <span class="glyphicon glyphicon-plus"></span>  <span class="glyphicon glyphicon-envelope"></span> </div>
+            </div>
+        @*<div class="col-md-12"> <span class="glyphicon glyphicon-plus"></span>
+                               <a href="@Url.Action("Create", "Messages", new { id = item.Id })">
+                                   <span class="glyphicon glyphicon-envelope"></span>
+                               </a>
+                               </div>*@
+        }
+    }
+    else
+    {
+        <div>
+            User Not Found!
+        </div>
+    }
+
+</div>

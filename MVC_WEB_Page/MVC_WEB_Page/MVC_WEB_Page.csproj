@@ -447,7 +447,7 @@
     <Content Include="Views\Shared\_Layout_Login.cshtml" />
     <Content Include="Views\Shared\_BaseLayout.cshtml" />
     <Content Include="Views\Shared\_LoginPartialMod1.cshtml" />
-    <Content Include="Views\Home\Friends.cshtml" />
+    <Content Include="Views\Home\AllFriends.cshtml" />
     <Content Include="Views\Home\Interests.cshtml" />
     <Content Include="Views\Home\Gallery.cshtml" />
     <Content Include="Views\Home\Messages.cshtml" />
@@ -460,8 +460,10 @@
     <Content Include="Views\Gallery\Create.cshtml" />
     <Content Include="Views\Gallery\Delete.cshtml" />
     <Content Include="Views\Gallery\Edit.cshtml" />
-    <Content Include="Views\Home\SearchUsers.cshtml" />
+    <Content Include="Views\Home\AllUsers.cshtml" />
     <Content Include="Views\Messages\Outbox.cshtml" />
+    <Content Include="Views\Shared\_DisplayUsers.cshtml" />
+    <Content Include="Views\Shared\_DisplayFriends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
