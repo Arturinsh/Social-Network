@@ -6,7 +6,11 @@
     Layout = null;
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
-
+                      <script>
+                          $(document).ready(function () {
+                              $("#Friends").addClass("active");
+                          });
+                      </script>          
 <div class="row baseMainRow">
    
        <div class="col-md-3 leftBlock">
@@ -28,10 +32,6 @@
             $(function () {
 
                 $("#form").on("submit", function (e) {
-
-                    if ($("#person_name").val() == "") {
-                        alert("Enter Search data!");
-                    }
 
                     e.preventDefault();
 

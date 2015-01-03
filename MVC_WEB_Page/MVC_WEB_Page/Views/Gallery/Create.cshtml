@@ -9,6 +9,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Create</title>
+    <script>
+        $(document).ready(function () {
+            $("#Gallery").addClass("active");
+        });
+    </script>
 </head>
 <body>
     @using (Html.BeginForm("Create", "Gallery", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))

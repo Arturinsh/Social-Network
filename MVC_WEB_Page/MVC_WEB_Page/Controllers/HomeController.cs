@@ -27,27 +27,32 @@ namespace MVC_WEB_Page.Controllers
             
             var context = new ApplicationDbContext();
             string match = User.Identity.GetUserId();
-            var user = from a in context.Users where a.Id ==match select a; 
+            var user = from a in context.Users where a.Id == match select a; 
             //var allUsers = context.Users.ToList();
             List<ApplicationUser> allUsers= new List<ApplicationUser>(); 
              foreach (var item in user){
                  allUsers.Add(new ApplicationUser {Id=item.Id, Name=item.Name,Surname=item.Surname,Image=item.Image });
              }
-           
-            ViewBag.Message =  "sss";
-
             return View(user);
         }//<-- about end
         [Authorize]
         public ActionResult ReturnUser(string user)
         {
-            var context = new ApplicationDbContext();
-            var users = from a in context.Users where a.Id == user select a;
-            var gallery = from a in context.Galleries where a.UserId == user select a;
-
             UserView userview = new UserView();
-            userview.gallery = gallery.ToList();
-            userview.user = users.ToList().First();
+            try
+            {
+                var context = new ApplicationDbContext();
+                var users = from a in context.Users where a.Id == user select a;
+                var gallery = from a in context.Galleries where a.UserId == user && a.Active select a;
+                userview.friends = false;
+
+                userview.gallery = gallery.ToList();
+                userview.user = users.ToList().First();
+            }
+            catch
+            {
+                return HttpNotFound();
+            }
             return View(userview);
         }
         [Authorize]
@@ -113,11 +118,12 @@ namespace MVC_WEB_Page.Controllers
              string match = User.Identity.GetUserId();
              context1 = new ApplicationDbContext();
 
-             var friends = from a in context.Friends where a.IdUser == match select a;
+             var friends = from a in context.Friends where a.IdUser == match || a.IdFriend == match select a;
 
              foreach (var item in friends)
              {
-                 var user = from a in context1.Users where a.Id == item.IdFriend select a;
+                 var user = from a in context1.Users
+                            where (a.Id == item.IdFriend || a.Id == item.IdUser) && a.Id != match select a;
                  foreach (var x in user)
                  {
                      allFriends.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
@@ -147,17 +153,17 @@ namespace MVC_WEB_Page.Controllers
 
                 var context = new ApplicationDbContext();
                 string match = User.Identity.GetUserId();
-                var friends = from a in context.Friends where a.IdUser == match select a;
+                var friends = from a in context.Friends where a.IdUser == match || a.IdFriend == match select a;
                 foreach (var item in friends)
                 {
                     if (sname != null && fname == null)
-                        user = from a in context1.Users where a.Id == item.IdFriend && (a.Name.StartsWith(sname) || a.Surname.StartsWith(sname)) select a;
+                        user = from a in context1.Users where ((a.Id == item.IdFriend || a.Id == item.IdUser) && a.Id != match) && (a.Name.StartsWith(sname) || a.Surname.StartsWith(sname)) select a;
 
                     if (sname != null && fname != null)
-                        user = from a in context1.Users where a.Id == item.IdFriend && (a.Name.StartsWith(sname) && a.Surname.StartsWith(fname) || a.Name.StartsWith(fname) && a.Surname.StartsWith(sname)) select a;
+                        user = from a in context1.Users where ((a.Id == item.IdFriend || a.Id == item.IdUser) && a.Id != match) && (a.Name.StartsWith(sname) && a.Surname.StartsWith(fname) || a.Name.StartsWith(fname) && a.Surname.StartsWith(sname)) select a;
 
                     if (fname != null && sname == null)
-                        user = from a in context1.Users where a.Id == item.IdFriend && (a.Name.StartsWith(fname) || a.Surname.StartsWith(fname)) select a;
+                        user = from a in context1.Users where ((a.Id == item.IdFriend || a.Id == item.IdUser) && a.Id != match) && (a.Name.StartsWith(fname) || a.Surname.StartsWith(fname)) select a;
 
                     foreach (var x in user)
                     {

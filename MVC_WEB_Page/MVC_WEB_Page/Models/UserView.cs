@@ -10,5 +10,6 @@ namespace MVC_WEB_Page.Models
         public List<UsersGalleries> gallery { get; set; }
 
         public ApplicationUser user { get; set; }
+        public bool friends { get; set; }
     }
 }

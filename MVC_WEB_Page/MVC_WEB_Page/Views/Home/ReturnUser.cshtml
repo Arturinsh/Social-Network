@@ -1,4 +1,4 @@
-﻿﻿@model MVC_WEB_Page.Models.UserView
+﻿﻿﻿@model MVC_WEB_Page.Models.UserView
 
 @{
     ViewBag.Title = "Home";
@@ -12,12 +12,14 @@
 <body>
     <div class="row baseMainRow">
         <div class="col-md-3 leftBlock">
-            <h3>@Model.user.Name @Model.user.Surname</h3>
+            <h1 class=" text-center">@Model.user.Name @Model.user.Surname</h1>
             <img src="~/Content/Images/Profiles/@Model.user.Image" class="img-responsive userImage" />
         </div>
         <div class="col-md-7 centralBlock">
-            <hr class="hrCentralBlock" />
+            <h3 class="text-center">Gallery</h3>
             <div class="row">
+                @if (Model.gallery.Count == 0)
+                { <h2 class="text-center">User has no images to show in gallery</h2>}
                 @foreach (var item in Model.gallery)
                 {
                     <div class="col-md-4">
@@ -28,7 +30,20 @@
                 }
             </div>
         </div>
+        <div class="col-md-2 leftBlock">
+            <h3 class="text-info">Info</h3>
+            Birth Date: @Model.user.BirthDate.ToShortDateString()<br />
+            Email: @Model.user.Email<br />
+            @if (Model.user.Gender == 0)
+            {
+                <p>Gender: Male</p>
+            }
+            else
+            {
+                <p>Gender: Female</p>
+            }
+
+        </div>
     </div>
 </body>
 </html>
-
