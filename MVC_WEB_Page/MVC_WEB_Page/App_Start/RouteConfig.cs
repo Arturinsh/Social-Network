@@ -68,9 +68,14 @@ namespace MVC_WEB_Page
             );
             routes.MapRoute(
                name: "Messages",
-               url: "Messages",
+               url: "Inbox/{id}",
                defaults: new { controller = "Messages", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+             name: "MsgOutbox",
+             url: "Outbox/{id}",
+             defaults: new { controller = "Messages", action = "Outbox", id = UrlParameter.Optional }
+          );
             routes.MapRoute(
                name: "SendMessage",
                url: "SendMessage",

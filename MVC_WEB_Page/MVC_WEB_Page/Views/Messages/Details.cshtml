@@ -5,55 +5,63 @@
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Messages</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IdAuthor)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IdAuthor)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IdReceiver)
-        </dt>
+<div class="row baseMainRow">
 
-        <dd>
-            @Html.DisplayFor(model => model.IdReceiver)
-        </dd>
+    <div class="col-md-3 leftBlock">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+        <div class="btn-group-vertical userUnderImageMenu">
+            <button onclick="location.href='/Inbox'" type="button" class="btn btn-default baseBtn "><span class="glyphicon glyphicon-envelope"></span> Inbox</button>
+            <button onclick="location.href='/Outbox'" type="button" class="btn btn-default baseBtn"><span class="glyphicon glyphicon-new-window"></span>Outbox</button>
+            <button onclick="location.href ='/SendMessage'" type="button" class="btn btn-default baseBtn"><span class="glyphicon glyphicon-pencil"></span>Send Message</button>
+        </div>
+    </div><!-- first column end-->
+    <div class="col-md-9 centralBlock">
+        <hr class="hrCentralBlock" />
+        <dl class="dl-horizontal">
+            <dt>
+               Author
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IdAuthor)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+        </dl>
+    </div><!-- second column end-->
+
+ 
+</div><!--Row end-->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,6 +1,5 @@
 ﻿@model MVC_WEB_Page.Models.MsgModelOutput
 
-
 @{
     ViewBag.Title = "Messages";
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
@@ -11,35 +10,35 @@
         <h2>@ViewBag.Title</h2>
         <hr />
         <div class="btn-group-vertical userUnderImageMenu">
-            <button onclick="location.href='/Messages'" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-envelope"></span> Inbox</button>
-            <button onclick="location.href='/Outbox'" type="button" class="btn btn-default baseBtn"><span class="glyphicon glyphicon-new-window"></span>Outbox</button>
+            <button onclick="location.href='/Inbox'" type="button" class="btn btn-default baseBtn "><span class="glyphicon glyphicon-envelope"></span> Inbox</button>
+            <button onclick="location.href='/Outbox'" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-new-window"></span>Outbox</button>
             <button onclick="location.href ='/SendMessage'" type="button" class="btn btn-default baseBtn"><span class="glyphicon glyphicon-pencil"></span>Send Message</button>
         </div>
     </div><!-- first column end-->
-    
+
     <div class="col-md-9 centralBlock">
         <hr class="hrCentralBlock" />
 
 
         <div class="row messageDes">
-            <div class="col-md-2">Author</div>
+            <div class="col-md-2">Receiver</div>
             <div class="col-md-5">Title</div>
-            <div class="col-md-3">Date</div>
+            <div class="col-md-3"> Date</div>
             <div class="col-md-2">Actions</div>
         </div>
         @foreach (var item in Model.messages)
         {
             <div class="row messageRow">
                 <a href="@Url.Action("Details", new { id = item.Id })" class="urlNoDecoration">
-                    <div class="col-md-2"> @Html.DisplayFor(modelItem => item.IdAuthor)</div>
+                    <div class="col-md-2"> @Html.DisplayFor(modelItem => item.IdReceiver)</div>
                     <div class="col-md-5"> @Html.DisplayFor(modelItem => item.Title)</div>
                     <div class="col-md-3"> @Html.DisplayFor(modelItem => item.Date)</div>
                 </a>
-                    <div class="col-md-2">                    
-                        <a href="@Url.Action("Delete", new { id = item.Id })">
-                            <i class="glyphicon glyphicon-remove" ></i>
-                        </a>
-                    </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("Delete", new { id = item.Id })">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </a>
+                </div>
             </div>
         }
         <div class="row">
@@ -51,6 +50,6 @@
                 }
             </ul>
         </div>
-        </div><!-- second column end-->
-   
+    </div><!-- second column end-->
+
 </div>

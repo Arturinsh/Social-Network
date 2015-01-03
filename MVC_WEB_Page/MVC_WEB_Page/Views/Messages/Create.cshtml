@@ -8,15 +8,14 @@
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 
-
 <div class="row baseMainRow">
 
     <div class="col-md-3 leftBlock">
         <h2>@ViewBag.Title</h2>
         <hr />
         <div class="btn-group-vertical userUnderImageMenu">
-            <button onclick="location.href='/Messages'" type="button" class="btn btn-default baseBtn "><span class="glyphicon glyphicon-envelope"></span> Inbox</button>
-            <button onclick="location.href='/Messages'" type="button" class="btn btn-default baseBtn"><span class="glyphicon glyphicon-new-window"></span>Outbox</button>
+            <button onclick="location.href='/Inbox'" type="button" class="btn btn-default baseBtn "><span class="glyphicon glyphicon-envelope"></span> Inbox</button>
+            <button onclick="location.href='/Outbox'" type="button" class="btn btn-default baseBtn"><span class="glyphicon glyphicon-new-window"></span>Outbox</button>
             <button onclick="location.href ='/SendMessage'" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-pencil"></span>Send Message</button>
         </div>
     </div><!-- first column end-->
@@ -75,10 +74,7 @@
    
        
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-
-    </div>
+   
 
 </div><!--Row end-->
 @section Scripts {

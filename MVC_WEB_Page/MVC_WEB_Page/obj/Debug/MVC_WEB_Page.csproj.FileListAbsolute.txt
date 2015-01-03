@@ -255,3 +255,4 @@ C:\web_git\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migra
 C:\web_git\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.csproj.GenerateResource.Cache
 C:\web_git\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.dll
 C:\web_git\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.pdb
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.Galleries.resources
