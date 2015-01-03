@@ -40,34 +40,59 @@ namespace MVC_WEB_Page.Controllers
         }//<-- about end
 
         [Authorize]
-        public ActionResult SearchUsers(string SearchName="")
+        public ActionResult AllUsers()
         {            
             List<ApplicationUser> allUsers = new List<ApplicationUser>();            
             var context1 = new ApplicationDbContext();
 
-            if(SearchName=="")
+            var user = from a in context1.Users select a;
+            foreach (var x in user)
             {
-                var user = from a in context1.Users select a;
-                foreach (var x in user)
-                {
-                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
-                }
-                return View(allUsers);
+                allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
             }
-            else
-            {
-                var user = from a in context1.Users where a.Name.StartsWith(SearchName) || a.Surname.StartsWith(SearchName) select a;
+            return View(allUsers);  
+        }//<-- AllUsers
 
+        [Authorize]
+        public PartialViewResult SearchUsers(string SearchName = "")
+        {
+            List<ApplicationUser> allUsers = new List<ApplicationUser>();
+            var context1 = new ApplicationDbContext();
+            string fname=null;
+            string sname=null;
+            try
+            {
+                var user = (System.Linq.IQueryable<MVC_WEB_Page.Models.ApplicationUser>)null;
+
+                string[] words = SearchName.Split(' ');
+                
+                fname = words[0];
+                if(words.Count()==2)
+                {                    
+                    sname = words[1];
+                }                
+
+                if (sname != null && fname == null)
+                    user = from a in context1.Users where a.Name.StartsWith(sname) || a.Surname.StartsWith(sname) select a;
+                               
+                if (sname != null && fname != null)
+                    user = from a in context1.Users where a.Name.StartsWith(sname) && a.Surname.StartsWith(fname) || a.Name.StartsWith(fname) && a.Surname.StartsWith(sname) select a;
+              
+                if (fname != null && sname==null)
+                    user = from a in context1.Users where a.Name.StartsWith(fname) || a.Surname.StartsWith(fname) select a;
+               
                 foreach (var x in user)
                 {
                     allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
                 }
-                return View(allUsers);  
-            }            
+            }
+            catch { }
+
+            return PartialView("_DisplayUsers", allUsers);        
         }//<-- SearchUsers
 
         [Authorize]
-        public ActionResult Friends(string SearchName = "")
+        public ActionResult AllFriends()
         {
             List<ApplicationUser> allUsers = new List<ApplicationUser>();
             var context1 = new ApplicationDbContext();
@@ -75,9 +100,7 @@ namespace MVC_WEB_Page.Controllers
             var context = new ApplicationDbContext();
             string match = User.Identity.GetUserId();
             context1 = new ApplicationDbContext(); 
-
-            if (SearchName == "")
-            {          
+      
                 var friends = from a in context.Friends where a.IdUser == match select a;
 
                 foreach (var item in friends)
@@ -89,23 +112,50 @@ namespace MVC_WEB_Page.Controllers
                     }
                 }
                 return View(allUsers);
-            }
-            else
-            {                
-                var friends = from a in context.Friends where a.IdUser == match select a;
+        }//<-- AllFriends
 
+        [Authorize]
+        public PartialViewResult SearchFriends(string SearchName = "")
+        {
+            List<ApplicationUser> allUsers = new List<ApplicationUser>();
+            var context1 = new ApplicationDbContext();
+            string fname = null;
+            string sname = null;
+            try
+            {
+                var user = (System.Linq.IQueryable<MVC_WEB_Page.Models.ApplicationUser>)null;
+
+                string[] words = SearchName.Split(' ');
+
+                fname = words[0];
+                if (words.Count() == 2)
+                {
+                    sname = words[1];
+                }
+
+                var context = new ApplicationDbContext();
+                string match = User.Identity.GetUserId();
+                var friends = from a in context.Friends where a.IdUser == match select a;
                 foreach (var item in friends)
-                {                   
-                    var user = from a in context1.Users where a.Id == item.IdFriend && a.Name.StartsWith(SearchName) || a.Surname.StartsWith(SearchName) select a;
+                {
+                    if (sname != null && fname == null)
+                        user = from a in context1.Users where a.Id == item.IdFriend && (a.Name.StartsWith(sname) || a.Surname.StartsWith(sname)) select a;
+
+                    if (sname != null && fname != null)
+                        user = from a in context1.Users where a.Id == item.IdFriend && (a.Name.StartsWith(sname) && a.Surname.StartsWith(fname) || a.Name.StartsWith(fname) && a.Surname.StartsWith(sname)) select a;
+
+                    if (fname != null && sname == null)
+                        user = from a in context1.Users where a.Id == item.IdFriend && (a.Name.StartsWith(fname) || a.Surname.StartsWith(fname)) select a;
+
                     foreach (var x in user)
                     {
                         allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
                     }
                 }
-
-                return View(allUsers);
             }
-        }//<-- end Friends
+            catch { }
+            return PartialView("_DisplayFriends", allUsers);
+        }//<-- SearchFriends
                
          [Authorize]
         public ActionResult Interests()

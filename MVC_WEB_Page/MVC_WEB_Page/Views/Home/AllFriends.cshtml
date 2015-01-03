@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<div class="row baseMainRow">
+
+    <div class="col-md-3 leftBlock">
+       
+        <hr class="hrCentralBlock" />
+
+    </div><!-- first column end-->
+    <div class="col-md-7 centralBlock">
+        <hr class="hrCentralBlock" />
+       
+        @using (Html.BeginForm("SearchFriends", "Home", FormMethod.Post, new { id = "form" }))
+        {
+            @Html.TextBox("person_name")
+            <input type="submit" value="Search" class="btn btn-primary" />
+        }
+
+        <script type="text/javascript">
+            $(function () {
+
+                $("#form").on("submit", function (e) {
+
+                    if ($("#person_name").val() == "") {
+                        alert("Enter Search data!");
+                    }
+                    
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: '@Url.Action("SearchFriends", "Home")',
+                        type: "post",
+                        data: {
+                            SearchName: $("#person_name").val()
+                        },
+                        success: function (data) {
+                            $("#content").html(data);
+                        }
+
+                    });                  
+                });
+            });
+        </script>
+
+        <br />
+        <div id="content">
+            @Html.Partial("_DisplayFriends", Model)
+        </div>
+        <br />
+    
+    </div><!-- second column end-->
+    <div class="col-md-2 rightBlock">
+        <hr class="hrCentralBlock" />
+        
+
+
+    </div><!-- third column end-->
+
+</div><!--Row end-->
+
