@@ -1,0 +1,81 @@
+﻿@model MVC_WEB_Page.Models.MsgModelCreate
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+
+<div class="row baseMainRow">
+
+    <div class="col-md-3 leftBlock">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+        
+    </div><!-- first column end-->
+    <div class="col-md-9 centralBlock">
+        <hr class="hrCentralBlock" />
+        @using (Html.BeginForm("Create", "Messages"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row sendMessageRow">
+        <div class="form-group">
+
+            <div class="col-md-12 ">
+                Send Message to <b>@ViewBag.ReceiverName @ViewBag.ReceiverSurname</b>
+            </div>
+            <div class="col-md-0">
+                <input type="text" id="messages_IdReceiver" name="messages.IdReceiver" class="hidden" value="@ViewBag.ReceiverMail">
+            </div>
+        </div>
+    </div>
+
+            <div class="row sendMessageRow">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.messages.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.messages.Title, new { htmlAttributes = new { @class = "form-control textboSend" } })
+                        @Html.ValidationMessageFor(model => model.messages.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row sendMessageRow">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.messages.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(m => m.messages.Content, new { @class = "form-control textboSend" })
+                        @Html.ValidationMessageFor(model => model.messages.Content, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row sendMessageRow">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Send" class="btn btn-default submitSendMessage" />
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div><!-- second column end-->
+
+
+
+
+
+
+</div><!--Row end-->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

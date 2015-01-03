@@ -9,13 +9,15 @@
 
                 <div class="col-md-12 userImg"><img src="~/Content/Images/Profiles/@item.Image" class="img-responsive userImage" /> </div>
                 <div class="col-md-12 text-center"> @item.Name  @item.Surname </div>
-                <div class="col-md-12"> <span class="glyphicon glyphicon-plus"></span>  <span class="glyphicon glyphicon-envelope"></span> </div>
+                @*<div class="col-md-12"> <span class="glyphicon glyphicon-plus"></span>  <span class="glyphicon glyphicon-envelope"></span> </div>*@
+
+                <div class="col-md-12">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <a href="@Url.Action("MessageIconClick", "Messages", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </a>
+                </div>
             </div>
-        @*<div class="col-md-12"> <span class="glyphicon glyphicon-plus"></span>
-                               <a href="@Url.Action("Create", "Messages", new { id = item.Id })">
-                                   <span class="glyphicon glyphicon-envelope"></span>
-                               </a>
-                               </div>*@
         }
     }
     else
