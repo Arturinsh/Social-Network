@@ -55,8 +55,8 @@ namespace MVC_WEB_Page.Controllers
         {            
             List<ApplicationUser> allUsers = new List<ApplicationUser>();            
             var context1 = new ApplicationDbContext();
-
-            var user = from a in context1.Users select a;
+            string current_user = User.Identity.GetUserId();
+            var user = from a in context1.Users where a.Id != current_user select a;
             foreach (var x in user)
                 {
                     allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
@@ -73,6 +73,7 @@ namespace MVC_WEB_Page.Controllers
             string sname=null;
             try
             {
+                string current_user = User.Identity.GetUserId();
                 var user = (System.Linq.IQueryable<MVC_WEB_Page.Models.ApplicationUser>)null;
 
                 string[] words = SearchName.Split(' ');
@@ -84,13 +85,13 @@ namespace MVC_WEB_Page.Controllers
                 }                
 
                 if (sname != null && fname == null)
-                    user = from a in context1.Users where a.Name.StartsWith(sname) || a.Surname.StartsWith(sname) select a;
+                    user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(sname) || a.Surname.StartsWith(sname)) select a;
                                
                 if (sname != null && fname != null)
-                    user = from a in context1.Users where a.Name.StartsWith(sname) && a.Surname.StartsWith(fname) || a.Name.StartsWith(fname) && a.Surname.StartsWith(sname) select a;
+                    user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(sname) && a.Surname.StartsWith(fname) || a.Name.StartsWith(fname) && a.Surname.StartsWith(sname)) select a;
               
                 if (fname != null && sname==null)
-                    user = from a in context1.Users where a.Name.StartsWith(fname) || a.Surname.StartsWith(fname) select a;
+                    user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(fname) || a.Surname.StartsWith(fname)) select a;
                
                 foreach (var x in user)
                 {

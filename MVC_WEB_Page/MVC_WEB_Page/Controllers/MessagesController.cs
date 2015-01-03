@@ -283,37 +283,28 @@ namespace MVC_WEB_Page.Controllers
             msgModelCreate.users = users;
 
             return View(msgModelCreate);
-
-            /*
-+             List<string>users = new List<string>();
-+            var context = new ApplicationDbContext();
-+            string match = User.Identity.GetUserId();
-+
-+            var friends= from a in context.Friends where a.IdUser == match select a;
-+          
-+            foreach (var item in friends)
-+            {
-+                var context1 = new ApplicationDbContext();
-+                var getFriendCredits = from x in context1.Users where x.Id == item.IdFriend select x;
-+                foreach (var x in getFriendCredits) users.Add(x.Name + "-" + x.Surname+" - (" +x.Email+")" );
-+                   
-+            }
-+            MsgModelCreate msgModelCreate= new MsgModelCreate();
-+            msgModelCreate.users = users;
-+
-+            /////////////////iddd
-+           
-+            List<ApplicationUser> allUsers = new List<ApplicationUser>();
-+            var user = from a in context.Users where a.Id==id select a;
-+            foreach (var x in user)
-+            {
-+                allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
-+            }
-+            ViewBag.Receiver = allUsers;
-+
-+            return View(msgModelCreate);
-+             */
         }
+
+        public ActionResult MessageIconClick(string id = "")
+        {
+            List<string> users = new List<string>();
+            var context = new ApplicationDbContext();
+
+            var friends = from a in context.Users where a.Id==id select a;
+                       
+            foreach (var x in friends)
+            {
+                users.Add(x.Name + "-" + x.Surname + " - (" + x.Email + ")");
+                ViewBag.ReceiverMail = x.Email;
+                ViewBag.ReceiverName = x.Name;
+                ViewBag.ReceiverSurname = x.Surname;
+            } 
+            
+            MsgModelCreate msgModelCreate = new MsgModelCreate();
+            msgModelCreate.users = users;
+
+            return View(msgModelCreate);
+         }
 
         // POST: Messages/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

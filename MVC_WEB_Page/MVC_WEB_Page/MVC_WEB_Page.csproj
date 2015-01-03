@@ -466,6 +466,7 @@
     <Content Include="Views\Shared\_DisplayUsers.cshtml" />
     <Content Include="Views\Shared\_DisplayFriends.cshtml" />
     <Content Include="Views\Home\ReturnUser.cshtml" />
+    <Content Include="Views\Messages\MessageIconClick.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
