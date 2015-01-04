@@ -55,6 +55,11 @@ namespace MVC_WEB_Page.Controllers
             }
             return View(userview);
         }
+        public ActionResult sendInvite()
+        {
+
+            return View();
+        }
         [Authorize]
         public ActionResult AllUsers()
         {            

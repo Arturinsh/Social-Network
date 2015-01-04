@@ -5,6 +5,7 @@
     ViewBag.Title = "Messages";
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
+
 <script>
     $(document).ready(function () {
         $("#Messages").addClass("active");
@@ -52,7 +53,6 @@
                 @foreach (var item in Model.paginationUrls)
                 {
                     @Html.Raw(item);
-
                 }
             </ul>
         </div>
