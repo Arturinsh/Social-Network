@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+           <script>
+               function changeInviteName(user) {
+                   $("#friendInviteName").text("Do you want to send friend request to "+user+ "?");
+               }
+           </script>
 <div class="row ">
    
         @if(Model.Count()!=0)
@@ -12,10 +17,9 @@
                     </a>    
                                    
                     <div class="col-md-12">
-                    <span class="glyphicon glyphicon-plus"></span>
+                        <a href="#" onclick="changeInviteName('@item.Name @item.Surname');"  data-toggle="modal" data-target="#inviteDialog"><span class="glyphicon glyphicon-plus"></span></a>
                         <a href="@Url.Action("MessageIconClick", "Messages", new { id = item.Id })">
                                 <span class="glyphicon glyphicon-envelope"></span>
-                            
                         </a>                        
                     </div>
                 </div>
@@ -28,4 +32,20 @@
             </div>
         }
 
+</div>
+<div class="modal fade" id="inviteDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Friend Invitation</h4>
+            </div>
+            <div class="modal-body">
+                <h3 id="friendInviteName"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
 </div>
