@@ -8,6 +8,7 @@
 <script>
     $(document).ready(function () {
         $("#Messages").addClass("active");
+        
     });
    
 </script>
@@ -38,8 +39,9 @@
                 @Html.LabelFor(model => model.messages.IdReceiver, htmlAttributes: new { @class = "control-label col-md-2" })
                 </div>
                 <div class="col-md-9">
-                @Html.EditorFor(model => model.messages.IdReceiver, new { htmlAttributes = new { @class = "form-control autocomplete textboSend" } })
+                @Html.EditorFor(model => model.messages.IdReceiver, new { htmlAttributes = new { @class = "form-control autocomplete textboSend", @onchange = "check ()" } })
                 @Html.ValidationMessageFor(model => model.messages.IdReceiver, "", new { @class = "text-danger" })
+                    <span id="divStatus" />
                 </div>
                 </div>
              </div>
@@ -69,7 +71,7 @@
             <div class="row sendMessageRow">   
             <div class="form-group">
                 <div class="col-md-12">
-                    <input type="submit" value="Send" class="btn btn-default submitSendMessage" />
+                    <input type="submit" value="Send" id="submitBtn" class="btn btn-default submitSendMessage" />
                  </div>
                 </div>
             </div>
@@ -89,17 +91,42 @@
 }
 
 <script>
-
- 
-
     var availableTags = [
         "support - (support@nova.com)"
        @foreach (string x in Model.users) {@Html.Raw(","); @Html.Raw('"'+x+'"'); }
     ];
     $(".autocomplete").autocomplete({
-        source: availableTags
+        source: availableTags,
+        change: function (event, ui) {
+        if (ui.item) {
+            check();
+        } else {
+            /* user entered a new item */
+        }
+    }
     });
 
+</script>
+<script type="text/javascript">
+   function check () {
+            var name = $(".autocomplete").val(); //Value entered in the text box
+            var status = $("#divStatus"); //DIV object to display the status message
+            status.html("Checking....") //While our Thread works, we will show some message to indicate the progress
 
+            //jQuery AJAX Post request
+            
+                $.post("/MsgValidReceiver/CheckName", { username: name },
+                    function (data) {
+                        if (data == 0) {
+                            status.html(name + " is available!");
+                            document.getElementById("submitBtn").disabled = false;
+                        } else {
+                            status.html(name + " is not available!");
+                            document.getElementById("submitBtn").disabled = true;
+                        }
 
+                    });
+          
+        };
+  
 </script>

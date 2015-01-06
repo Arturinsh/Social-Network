@@ -322,16 +322,19 @@ namespace MVC_WEB_Page.Controllers
             //support - (support@nova.com)
             var context = new ApplicationDbContext();
             var ifEmail = from a in context.Users where a.Email == email select a;
-            if (ifEmail.Count() == 0)
-            {
-                name = email.Substring(0, email.IndexOf("-"));
-                surname = email.Substring(email.IndexOf("-") + 1, email.IndexOf(" ") - email.IndexOf("-") - 1);
-                email = email.Substring(email.IndexOf("(") + 1, email.IndexOf(")") - email.IndexOf("(") - 1);
-                ifEmail = from a in context.Users where ((a.Name == name) && (a.Surname == surname) && (a.Email == email)) select a;
+            try
+            {            
+                if (ifEmail.Count() == 0)
+                {
+                    name = email.Substring(0, email.IndexOf("-"));
+                    surname = email.Substring(email.IndexOf("-") + 1, email.IndexOf(" ") - email.IndexOf("-") - 1);
+                    email = email.Substring(email.IndexOf("(") + 1, email.IndexOf(")") - email.IndexOf("(") - 1);
+                    ifEmail = from a in context.Users where ((a.Name == name) && (a.Surname == surname) && (a.Email == email)) select a;
 
-                //if (ifEmail.Count() == 0) return RedirectToAction("Home");
-            }//<--
-
+                    if (ifEmail.Count() == 0) return RedirectToAction("Create");
+                }//<--
+            }
+            catch { return RedirectToAction("Create"); };
             string receiver = "|" + email + "|";
             foreach (var x in ifEmail) receiver = x.Id;
 

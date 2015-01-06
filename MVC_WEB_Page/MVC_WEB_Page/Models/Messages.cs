@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC_WEB_Page.Anotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +17,7 @@ namespace MVC_WEB_Page.Models
         [StringLength(128)]
         public string IdAuthor { get; set; }        
         [Required]
-        [StringLength(128)]
+        [StringLength(128, MinimumLength = 5, ErrorMessage="Invalid input")]
         public string IdReceiver { get; set; }
         [StringLength(128)]
         public string Title { get; set; }
