@@ -6,18 +6,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MVC_WEB_Page.Models
 {
-    public class UsersGalleries
+    public class Comments
     {
         [Required]
         public int Id { get; set; }
         [Required]
         [StringLength(128)]
-        public String UserId { get; set; }
+        public string IdUser { get; set; }
         [Required]
-        public String Image { get; set; }
-
-        public String Name { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime date { get; set; }
         [Required]
-        public bool Active { get; set; }
+        public int IdImage { get; set; }
+        [Required]
+        public string Content { get; set; }  
     }
 }

@@ -11,10 +11,12 @@
                        function (data) {
                            if (data == 0) {
                                $("#friendAvailable").text("Invite sucessfull!");
+                               $("#friendAvailable").removeClass("text-danger");
                                document.getElementById("InviteYes").disabled = true;
                               
                            } else {
                                $("#friendAvailable").text("You have already invited friend!");
+                               $("#friendAvailable").addClass("text-danger");
                                document.getElementById("InviteYes").disabled = true;
                            }
 

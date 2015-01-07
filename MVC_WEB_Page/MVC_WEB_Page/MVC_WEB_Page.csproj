@@ -225,6 +225,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcments.cs" />
+    <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\Friends.cs" />
     <Compile Include="Models\HomeDefaultPageOutput.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -483,6 +484,8 @@
     <Content Include="Views\Messages\MessageIconClick.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_GalleryView.cshtml" />
+    <Content Include="Views\Shared\_ImageView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

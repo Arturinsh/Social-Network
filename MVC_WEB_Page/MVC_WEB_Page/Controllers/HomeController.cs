@@ -201,7 +201,7 @@ namespace MVC_WEB_Page.Controllers
 
                 var context = new ApplicationDbContext();
                 string match = User.Identity.GetUserId();
-                var friends = from a in context.Friends where a.IdUser == match || a.IdFriend == match select a;
+                var friends = from a in context.Friends where (a.IdUser == match || a.IdFriend == match) && a.Accepted == 1 select a;
                 foreach (var item in friends)
                 {
                     if (sname != null && fname == null)

@@ -45,6 +45,7 @@ namespace MVC_WEB_Page.Models
         public DbSet<Messages> Messages { get; set; }
         public DbSet<UsersGalleries> Galleries { get; set; }
         public DbSet<Announcments> Announcments { get; set; }
+        public DbSet<Comments> Comments { get; set; }
     }//<-- 
     
 }//<-- namespace end

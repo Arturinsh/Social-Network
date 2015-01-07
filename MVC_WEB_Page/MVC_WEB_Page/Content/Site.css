@@ -242,3 +242,22 @@ textarea {
     margin-top:1em;
 
 }
+/*gallery*/
+.gallleryImgHeight{
+ height:15em;
+}
+.galleryA {
+    height:10em;
+    display:block;
+}
+.galleryImg{
+    height:auto;
+    max-height:10em;
+    width:auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}

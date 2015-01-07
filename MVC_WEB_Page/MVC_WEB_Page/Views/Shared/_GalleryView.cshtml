@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MVC_WEB_Page.Models.UsersGalleries>
+
+<script>
+
+</script>
+<div class="row ">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 gallleryImgHeight thumbnail">
+            <div class="col-md-12 ">
+                <a href="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" class=" galleryA">
+                    <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" class="galleryImg" />
+                </a>
+            </div>
+            <div class="col-md-12 text-center">
+                <a href="~/Content/Images/@User.Identity.Name.ToString()/@item.Image">
+                    @item.Name
+                </a>
+            </div>
+            <div class="col-md-12">
+                <a href="#" onclick="deleteImage('@item.Id','@item.Name','@item.Image');" data-toggle="modal" data-target="#deleteDialog"><span class="glyphicon glyphicon-remove"></span>Delete</a>
+            </div>
+        </div>
+    }
+</div>

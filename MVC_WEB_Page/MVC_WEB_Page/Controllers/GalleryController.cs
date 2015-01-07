@@ -168,7 +168,29 @@ namespace MVC_WEB_Page.Controllers
             catch { }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
+        public PartialViewResult deleteImage(int id)
+        {
+            var context = new ApplicationDbContext();
+            UsersGalleries usersgallery = context.Galleries.Find(id);
+            if (User.Identity.GetUserId() == usersgallery.UserId)
+            {
+                var path = Path.Combine(Server.MapPath("~/Content/Images/" + User.Identity.Name + "/"), usersgallery.Image);
+                context.Galleries.Remove(usersgallery);
+                context.SaveChanges();
+                try
+                {
+                    System.IO.File.Delete(path);
+                }
+                catch { }
+            }
+            var currentUsersID = User.Identity.GetUserId();
+            var gallery = from c in db.Galleries
+                          where c.UserId == currentUsersID
+                          select c;
+            List<UsersGalleries> images = gallery.ToList();
+            return PartialView("_GalleryView", images);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
