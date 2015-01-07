@@ -168,6 +168,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\Validators\InviteValidFriendController.cs" />
     <Compile Include="Controllers\Validators\MsgValidReceiverController.cs" />
     <Compile Include="Global.asax.cs">
@@ -480,6 +481,8 @@
     <Content Include="Views\Shared\_DisplayFriends.cshtml" />
     <Content Include="Views\Home\ReturnUser.cshtml" />
     <Content Include="Views\Messages\MessageIconClick.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

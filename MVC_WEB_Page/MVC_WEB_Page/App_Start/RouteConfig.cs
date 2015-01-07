@@ -87,13 +87,23 @@ namespace MVC_WEB_Page
                defaults: new { controller = "Messages", action = "Create", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+               name: "Profile",
+               url: "Profile",
+               defaults: new { controller = "Profile", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+               name: "ChangePassword",
+               url: "ChangePassword",
+               defaults: new { controller = "Profile", action = "ChangePassword", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
 
-
+            
 
         }//<-- registered routes end
     }//<-- route config end

@@ -1,0 +1,77 @@
+﻿@model MVC_WEB_Page.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+@*
+        <h2>@ViewBag.Title.</h2>
+        <h3>@ViewBag.Message</h3>
+
+    <p>Home page template.</p>
+*@
+
+
+
+<div class="row baseMainRow">
+
+
+
+
+
+    <div class="col-md-3 leftBlock">
+       
+        <h3>Profile Managment</h3>
+        <hr />
+
+        <div class="btn-group-vertical userUnderImageMenu">
+            <button type="button" onclick="location.href = '/Profile'"  class="btn btn-default baseBtn homCenterWell"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-user"></span></div><div class="col-md-9">Profile</div></div></button>
+            <button type="button" onclick="location.href = '/Profile'"  class="btn btn-default baseBtn homCenterWell"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-leaf"></span></div><div class="col-md-9">Interests</div></div></button>
+            <button type="button" onclick="location.href = '/Profile'"  class="btn btn-default baseBtn homCenterWell"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-ban-circle"></span></div><div class="col-md-9">Declined invitations</div></div></button>
+            <button type="button" onclick="location.href = '/ChangePassword'" class="btn btn-default baseBtn homCenterWell"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-lock"></span></div><div class="col-md-9">Change password</div></div></button>
+        </div>
+
+
+
+
+    </div><!-- first column end-->
+    <div class="col-md-9 centralBlock">
+        <hr class="hrCentralBlock" />
+       
+
+        @using (Html.BeginForm("#", "#", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+               @Html.AntiForgeryToken()
+               @Html.ValidationSummary("", new { @class = "text-danger" })
+ 
+                 <div class="row formMargin">
+                   <div class="col-md-3">
+                        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                   </div>
+                   <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                   </div>
+                </div>
+    
+    
+    
+    
+    
+    <div class="row formMargin">
+               <div class="col-md-7">
+                   <input type="submit" value="Edit Profile" class="btn btn-default" />
+               </div>      
+    </div>
+}
+
+
+
+
+
+
+
+    </div><!-- second column end-->
+    
+
+</div><!--Row end-->
+
