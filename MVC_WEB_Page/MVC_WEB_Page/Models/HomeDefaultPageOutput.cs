@@ -31,6 +31,8 @@ namespace MVC_WEB_Page.Models
         public ApplicationUser LoggedInUser { get; set; }
         public List<NotAcceptedFriend> NotAcceptedFriends = new List<NotAcceptedFriend>();
         public List<Announcments> annoucments = new List<Announcments>();
+        //<-- My newwest friends
+        public List<ApplicationUser> friendsMyStart = new List<ApplicationUser>();
         public void Insert(int _Id, string _IdUser, DateTime _date, string _IdFriend, int _Accepted, String _UserCredits, String _UserImg)
         {
             

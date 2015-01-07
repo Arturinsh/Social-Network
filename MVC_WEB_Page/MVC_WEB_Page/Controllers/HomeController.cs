@@ -24,6 +24,7 @@ namespace MVC_WEB_Page.Controllers
         public ActionResult Home()
         {
             var context = new ApplicationDbContext();
+            var context1 = new ApplicationDbContext();
             string match = User.Identity.GetUserId();
             
             HomeDefaultPageOutput homeDefaultPageOutput = new HomeDefaultPageOutput();
@@ -41,7 +42,7 @@ namespace MVC_WEB_Page.Controllers
              var friendQuerry= from a in context.Friends  where a.IdFriend==match && a.Accepted==0 select a;
              foreach (var item in friendQuerry)
              {
-                 var context1 = new ApplicationDbContext();
+                 
                  var quer = (from a in context1.Users where a.Id == item.IdUser select a).Take(1);
                  foreach(var x in quer)
                  homeDefaultPageOutput.Insert(item.Id, item.IdUser, item.date, item.IdFriend, item.Accepted, x.Name+" "+x.Surname,x.Image);
@@ -58,6 +59,22 @@ namespace MVC_WEB_Page.Controllers
              }//<--
              homeDefaultPageOutput.annoucments = announcments;
             //<-- get announcments end
+            //--> get 4 friends
+             List<ApplicationUser> myFriends = new List<ApplicationUser>();
+             var currentUserId = User.Identity.GetUserId();
+             var friends = (from a in context.Friends orderby a.date descending where (a.IdUser == match || a.IdFriend == match) && a.Accepted == 1 select a).Take(4);
+             foreach (var item in friends)
+             {
+                 var user = from a in context1.Users
+                            where (a.Id == item.IdFriend || a.Id == item.IdUser) && a.Id != match
+                            select a;
+                 foreach (var x in user)
+                 {
+                     myFriends.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
+                 }
+             }
+             homeDefaultPageOutput.friendsMyStart = myFriends;
+            //<-- get 4 friends end
              return View(homeDefaultPageOutput);
         }//<-- about end
         [Authorize]

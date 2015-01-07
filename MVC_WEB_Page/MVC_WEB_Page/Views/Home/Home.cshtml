@@ -116,6 +116,7 @@
 
                              </div>
                     }
+                    @if (Model.NotAcceptedFriends.Count == 0){ <span>"Currently you dont have any friendship request"</span> }
                 </div>
             </div>
            
@@ -152,26 +153,29 @@
         <div class="row">
             <h3>Friends</h3>
             <hr />
-            <div class="col-md-3">
-
-                sdsdddddssd
-            </div>
-            <div class="col-md-3">
-
-                sdsdddddssd
-            </div>
-            <div class="col-md-3">
-
-                sdsdddddssd
-            </div>
-            <div class="col-md-3">
-
-                sdsdddddssd
-            </div>
+            
+            @foreach (var item in Model.friendsMyStart)
+            {
+                <div class="col-md-3">
+                    <div class="row">
+                        <a href="@Url.Action( "ReturnUser", new { user = item.Id})">
+                            <div class="col-md-12 friendshomeStart"><img src="~/Content/Images/Profiles/@item.Image" class="img-responsive userImage" /></div>
+                            <div class="col-md-12">@item.Name @item.Surname</div>
+                        </a>
+                        <div class="col-md-12">
+                            <a href="@Url.Action("MessageIconClick", "Messages", new { id = item.Id })">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                            </a>
+                        </div>
+                 </div>
+                     
+                 </div>
+                
+            }
 
         </div>
         <div class="row">
-            <h3>Friends of friends</h3>
+            <h3>Gallerys</h3>
             <hr />
             <div class="col-md-3">
 
