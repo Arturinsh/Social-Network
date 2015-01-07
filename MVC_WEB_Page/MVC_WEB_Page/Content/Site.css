@@ -185,7 +185,48 @@ textarea {
 }
 /*Start page*/
 .rowWell{
-    width:98%;
+    width:100%;
     margin:0 auto 0 auto;
+
+}
+
+#collapseAnnouncments{
+   
+
+}
+.homCenterWell{
+
+
+}
+/* Announcments*/
+.announcments{
+   margin-bottom:0.2em;
+   background-color:#FFFFFF;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+
+}
+.announcments:hover{
+ 
+   background-color:#232222;
+   color:#ffffff;
+}
+.stateAnounc0{
+  background-color:#4aaf48;
+ color:#ffffff;
+
+}
+.stateAnounc1{
+ background-color:#4aaf48;
+ color:#ffffff;
+}
+.stateAnounc2{
+  background-color:#0673b2;
+ color:#ffffff;
+}
+.textAlign-Center{
+    text-align:center;
 
 }

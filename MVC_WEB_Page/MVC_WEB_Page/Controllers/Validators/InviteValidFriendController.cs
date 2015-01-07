@@ -50,15 +50,32 @@ namespace MVC_WEB_Page.Controllers.Validators
             int _id =Convert.ToInt32(form["ID"]);
             string match = User.Identity.GetUserId();
             var querry = from a in context.Friends where a.Id == _id && a.IdFriend==match select a;
-            //if (querry.Count() == 1) return Json(0);
-            //else return Json(1);
+            //get name
+            var user = (from a in context.Users where a.Id == match select a).Take(1);
+            string username = "";
+            foreach (var item in user)
+            {
+                username = item.Name + " " + item.Surname;
+            }
 
             foreach (var item in querry)
             {
                 item.Accepted = 1;
+                Announcments announce = new Announcments
+                 { 
+                     IdReceiver=item.IdUser,
+                     Content = username+" has accepted your friendship request",
+                     Date=DateTime.Now,
+                     read=0,
+                     state=1
+                 };
+                 context.Announcments.Add(announce);
                 break;
                
             }
+
+            
+
 
             // Submit the changes to the database. 
             try
@@ -87,10 +104,25 @@ namespace MVC_WEB_Page.Controllers.Validators
             var querry = from a in context.Friends where a.Id == _id && a.IdFriend == match select a;
             //if (querry.Count() == 1) return Json(0);
             //else return Json(1);
-
+            //get name
+            var user = (from a in context.Users where a.Id == match select a).Take(1);
+            string username = "";
+            foreach (var item in user)
+            {
+                username = item.Name + " " + item.Surname;
+            }
             foreach (var item in querry)
             {
                 item.Accepted = -1;
+                Announcments announce = new Announcments
+                {
+                    IdReceiver = item.IdUser,
+                    Content = username + " has declined your friendship request",
+                    Date = DateTime.Now,
+                    read = 0,
+                    state = 2
+                };
+                context.Announcments.Add(announce);
                 break;
 
             }

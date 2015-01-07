@@ -256,3 +256,5 @@ E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Mig
 E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.csproj.GenerateResource.Cache
 E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.dll
 E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.pdb
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.Announcments.resources
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.Announcmentsstate.resources

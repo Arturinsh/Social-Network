@@ -48,7 +48,16 @@ namespace MVC_WEB_Page.Controllers
              }
 
             //<--get friend invations end
+            //--> get announcments
+             var anounceQuerry = (from a in context.Announcments orderby a.Date descending where a.IdReceiver == match select a).Take(10);
+             List<Announcments> announcments = new List<Announcments>();
+             foreach (var item in anounceQuerry)
+             {
+                 announcments.Add(new Announcments {Content= item.Content, IdReceiver=item.IdReceiver, Date= item.Date, read= item.read, Id= item.Id, state=item.state});
 
+             }//<--
+             homeDefaultPageOutput.annoucments = announcments;
+            //<-- get announcments end
              return View(homeDefaultPageOutput);
         }//<-- about end
         [Authorize]

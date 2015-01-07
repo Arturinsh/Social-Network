@@ -100,7 +100,7 @@
         
         
         <div class="btn-group-vertical userUnderImageMenu">
-            <button type="button" class="btn btn-default baseBtn" data-toggle="collapse" data-target="#collapseUninvitedFiends" ><span class="glyphicon glyphicon-user"></span> Friendship requests</button>
+            <button type="button" class="btn btn-default baseBtn homCenterWell" data-toggle="collapse" data-target="#collapseUninvitedFiends"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-user"></span></div><div class="col-md-9"> Friendship requests</div></div></button>
             <div class="collapse" id="collapseUninvitedFiends">
                 <div class="well row rowWell" id="FrienReqCont">
 
@@ -118,8 +118,25 @@
                     }
                 </div>
             </div>
-            <button type="button" class="btn btn-default baseBtn">2</button>
-            <button type="button" class="btn btn-default baseBtn">3</button>
+           
+            <button type="button" class="btn btn-default baseBtn homCenterWell" data-toggle="collapse" data-target="#collapseAnnouncments"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-info-sign"></span></div><div class="col-md-9"> Info</div></div></button>
+            <div class="collapse " id="collapseAnnouncments">
+                <div class="well row rowWell">
+                    @foreach (var item in Model.annoucments)
+                    {
+
+                        <div class="row announcments @Html.Raw("stateAnounc"+item.state) ">
+                            <div class="col-md-12  textAlign-Center">@item.Content </div>
+                            <div class="col-md-12 textAlign-Center">@item.Date </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+
+
+            <button type="button" class="btn btn-default baseBtn homCenterWell"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-cog"></span></div><div class="col-md-9">Profile</div></div></button>
         </div>
 
       
@@ -133,17 +150,62 @@
             <p>Text text text....</p>
         </div>
         <div class="row">
-            <div class="col-lg-12"> sssss</div>
-            <div class="col-lg-12"> sssss</div>
-            <div class="col-lg-12"> sssss</div>
-        </div>
+            <h3>Friends</h3>
+            <hr />
+            <div class="col-md-3">
 
+                sdsdddddssd
+            </div>
+            <div class="col-md-3">
+
+                sdsdddddssd
+            </div>
+            <div class="col-md-3">
+
+                sdsdddddssd
+            </div>
+            <div class="col-md-3">
+
+                sdsdddddssd
+            </div>
+
+        </div>
+        <div class="row">
+            <h3>Friends of friends</h3>
+            <hr />
+            <div class="col-md-3">
+
+                sdsdddddssd
+            </div>
+            <div class="col-md-3">
+
+                sdsdddddssd
+            </div>
+            <div class="col-md-3">
+
+                sdsdddddssd
+            </div>
+            <div class="col-md-3">
+
+                sdsdddddssd
+            </div>
+
+        </div>
 
      
     </div><!-- second column end-->
     <div class="col-md-2 rightBlock">
         <hr class="hrCentralBlock" />
         some info here
+       <div class="row">
+           <hr />
+           <div class="col-md-12">
+
+               sdsdddddssd
+           </div>
+
+
+       </div>
 
 
     </div><!-- third column end-->
