@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
            <script>
                function changeInviteName(user, id) {
+                   document.getElementById("InviteYes").disabled = false;
+                   $("#friendAvailable").text("");
                    $("#friendInviteName").text("Do you want to send friend request to " + user + "?");
                    document.getElementById("InviteYes").onclick = function () {
-
                        
                       
                        $.post("/InviteValidFriend/inviteFriend", { ID: id },
