@@ -1,8 +1,34 @@
 ﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
            <script>
-               function changeInviteName(user) {
-                   $("#friendInviteName").text("Do you want to send friend request to "+user+ "?");
-               }
+               function changeInviteName(user, id) {
+                   $("#friendInviteName").text("Do you want to send friend request to " + user + "?");
+                   document.getElementById("InviteYes").onclick = function () {
+
+                       
+                      
+                       $.post("/InviteValidFriend/inviteFriend", { ID: id },
+                       function (data) {
+                           if (data == 0) {
+                               $("#friendAvailable").text("Invite sucessfull!");
+                               document.getElementById("InviteYes").disabled = true;
+                              
+                           } else {
+                               $("#friendAvailable").text("You have already invited friend!");
+                               document.getElementById("InviteYes").disabled = true;
+                           }
+
+                       });
+
+
+                   };//<-- on click invite end
+
+
+
+
+               }//<-- main function end
+
+         
+
            </script>
 <div class="row ">
    
@@ -17,7 +43,7 @@
                     </a>    
                                    
                     <div class="col-md-12">
-                        <a href="#" onclick="changeInviteName('@item.Name @item.Surname');"  data-toggle="modal" data-target="#inviteDialog"><span class="glyphicon glyphicon-plus"></span></a>
+                        <a href="#" onclick="changeInviteName('@item.Name @item.Surname', '@item.Id' );" data-toggle="modal" data-target="#inviteDialog"><span class="glyphicon glyphicon-plus"></span></a>
                         <a href="@Url.Action("MessageIconClick", "Messages", new { id = item.Id })">
                                 <span class="glyphicon glyphicon-envelope"></span>
                         </a>                        
@@ -42,10 +68,14 @@
             <div class="modal-body">
                 <h3 id="friendInviteName"></h3>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+            
+            <div class="modal-body">
+                <h3 id="friendAvailable"></h3>
             </div>
-        </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary " id="InviteYes">Yes</button>
+                </div>
+</div>
     </div>
 </div>

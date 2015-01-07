@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MVC_WEB_Page.Controllers.Validators
 {
+    [Authorize]
     public class MsgValidReceiverController : Controller
     {
         //

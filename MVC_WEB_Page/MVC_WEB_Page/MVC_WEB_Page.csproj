@@ -168,6 +168,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\Validators\InviteValidFriendController.cs" />
     <Compile Include="Controllers\Validators\MsgValidReceiverController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -473,6 +474,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Profiles\" />
+    <Folder Include="Views\InviteValidFriend\" />
     <Folder Include="Views\MsgValidReceiver\" />
     <Folder Include="Views\UserParameters\" />
   </ItemGroup>

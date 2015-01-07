@@ -9,6 +9,7 @@ using MVC_WEB_Page.Models;
 
 namespace MVC_WEB_Page.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -55,11 +56,12 @@ namespace MVC_WEB_Page.Controllers
             }
             return View(userview);
         }
-        public ActionResult sendInvite()
+        public ActionResult sendInvite(string ID)
         {
+           
 
             return View();
-        }
+        }//<-- send invite end
         [Authorize]
         public ActionResult AllUsers()
         {            
