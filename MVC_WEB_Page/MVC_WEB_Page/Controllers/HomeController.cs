@@ -23,18 +23,33 @@ namespace MVC_WEB_Page.Controllers
         [Authorize]
         public ActionResult Home()
         {
-            var currentUserId = User.Identity.GetUserId();
-           // var db = new DefaultConnection();
-            
             var context = new ApplicationDbContext();
             string match = User.Identity.GetUserId();
-            var user = from a in context.Users where a.Id == match select a; 
-            //var allUsers = context.Users.ToList();
-            List<ApplicationUser> allUsers= new List<ApplicationUser>(); 
-             foreach (var item in user){
-                 allUsers.Add(new ApplicationUser {Id=item.Id, Name=item.Name,Surname=item.Surname,Image=item.Image });
+            
+            HomeDefaultPageOutput homeDefaultPageOutput = new HomeDefaultPageOutput();
+            //--> get logged user info
+            ApplicationUser LoggedInUser = new ApplicationUser();
+            var userLoged = from a in context.Users where a.Id == match select a; 
+            foreach (var item in userLoged)
+            {
+                 LoggedInUser = new ApplicationUser { Id = item.Id, Name = item.Name, Surname = item.Surname, Image = item.Image };
+                 break;
              }
-            return View(user);
+             homeDefaultPageOutput.LoggedInUser = LoggedInUser;
+            //<-- logged user info end
+            //--> get friend invaitions
+             var friendQuerry= from a in context.Friends  where a.IdFriend==match && a.Accepted==0 select a;
+             foreach (var item in friendQuerry)
+             {
+                 var context1 = new ApplicationDbContext();
+                 var quer = (from a in context1.Users where a.Id == item.IdUser select a).Take(1);
+                 foreach(var x in quer)
+                 homeDefaultPageOutput.Insert(item.Id, item.IdUser, item.date, item.IdFriend, item.Accepted, x.Name+" "+x.Surname);
+             }
+
+            //<--get friend invations end
+
+             return View(homeDefaultPageOutput);
         }//<-- about end
         [Authorize]
         public ActionResult ReturnUser(string user)
@@ -125,7 +140,7 @@ namespace MVC_WEB_Page.Controllers
              string match = User.Identity.GetUserId();
              context1 = new ApplicationDbContext();
 
-             var friends = from a in context.Friends where a.IdUser == match || a.IdFriend == match select a;
+             var friends = from a in context.Friends where (a.IdUser == match || a.IdFriend == match)&& a.Accepted==1 select a;
 
              foreach (var item in friends)
              {

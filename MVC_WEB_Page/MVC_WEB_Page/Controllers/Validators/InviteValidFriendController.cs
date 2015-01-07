@@ -30,10 +30,10 @@ namespace MVC_WEB_Page.Controllers.Validators
             //check if already invted
 
             var querry2 = from a in context.Friends where a.IdFriend == match && a.IdUser == _idFriend select a;
-            if (querry2.Count() == 1) Json(1);
+            if (querry2.Count() == 1) return Json(1);
             //reverse look up if other invite
             querry2 = from a in context.Friends where a.IdFriend == _idFriend && a.IdUser == match select a;
-            if (querry2.Count() == 1) return Json(1);
+            if (querry2.Count() == 1)return Json(1);
             //string email = idReceiver;
 
             var friendInvite = new Friends { IdUser=match,date=DateTime.Now,IdFriend=_idFriend,Accepted=0 };

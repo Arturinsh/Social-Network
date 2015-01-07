@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+﻿@model MVC_WEB_Page.Models.HomeDefaultPageOutput
 
 @{
     ViewBag.Title = "Home";
@@ -12,25 +12,41 @@
 *@
 <div class="row baseMainRow">
     
-    @foreach (var item in Model){
+    
     
     
 
     <div class="col-md-3 leftBlock">
         @using Microsoft.AspNet.Identity
-        <h3> @item.Name @item.Surname </h3>
+        <h3> @Model.LoggedInUser.Name @Model.LoggedInUser.Surname </h3>
         <hr />
   
 
         
-        <img src="~/Content/Images/Profiles/@item.Image" class="img-responsive userImage" />
+        <img src="~/Content/Images/Profiles/@Model.LoggedInUser.Image" class="img-responsive userImage" />
         
         
         <div class="btn-group-vertical userUnderImageMenu">
-            <button type="button" class="btn btn-default baseBtn">1</button>
+            <button type="button" class="btn btn-default baseBtn" data-toggle="collapse" data-target="#collapseUninvitedFiends" ><span class="glyphicon glyphicon-user"></span> Friendship requests</button>
+            <div class="collapse" id="collapseUninvitedFiends">
+                <div class="well row">
+
+                    @foreach (var item in Model.NotAcceptedFriends)
+                    {
+                       
+                        <div class="col-md-10 col-md-offset-1">
+                        <a href="#" onclick="changeInviteName(@item.UserCredits, '@item.Id' );" data-toggle="modal" data-target="#inviteDialog"><span class="glyphicon glyphicon-plus"></span> @item.UserCredits</a>
+                        </div>
+                    }
+                </div>
+            </div>
             <button type="button" class="btn btn-default baseBtn">2</button>
             <button type="button" class="btn btn-default baseBtn">3</button>
         </div>
+
+      
+    
+        
     </div><!-- first column end-->
     <div class="col-md-7 centralBlock">
     <hr class="hrCentralBlock"/>
@@ -45,50 +61,7 @@
         </div>
 
 
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            Collapsible Group Item #1
-                        </a><i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            Collapsible Group Item #2
-                        </a><i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            Collapsible Group Item #3
-                        </a><i class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
-                    </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-        </div>
+     
     </div><!-- second column end-->
     <div class="col-md-2 rightBlock">
         <hr class="hrCentralBlock" />
@@ -96,17 +69,26 @@
 
 
     </div><!-- third column end-->
-    }
+    
 </div><!--Row end-->
     
-<script type="text/javascript">
-    function toggleChevron(e) {
-        $(e.target)
-            .prev('.panel-heading')
-            .find("i.indicator")
-            .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
-    }
-    $('#accordion').on('hidden.bs.collapse', toggleChevron);
-    $('#accordion').on('shown.bs.collapse', toggleChevron);
+<div class="modal fade" id="inviteDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Friend Invitation</h4>
+        </div>
+        <div class="modal-body">
+            <h3 id="friendInviteName"></h3>
+        </div>
 
-</script>
+        <div class="modal-body">
+            <h3 id="friendAvailable"></h3>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary " id="InviteYes">Yes</button>
+        </div>
+    </div>
+</div>
+</div>
