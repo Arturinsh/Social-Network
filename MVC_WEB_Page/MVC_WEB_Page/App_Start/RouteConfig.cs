@@ -77,6 +77,11 @@ namespace MVC_WEB_Page
              defaults: new { controller = "Messages", action = "Outbox", id = UrlParameter.Optional }
           );
             routes.MapRoute(
+             name: "ReturnUser",
+             url: "ReturnUser/{id}",
+             defaults: new { controller = "Home", action = "ReturnUser", id = UrlParameter.Optional }
+          );
+            routes.MapRoute(
                name: "SendMessage",
                url: "SendMessage",
                defaults: new { controller = "Messages", action = "Create", id = UrlParameter.Optional }

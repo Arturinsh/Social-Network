@@ -41,6 +41,76 @@ namespace MVC_WEB_Page.Controllers.Validators
             context.SaveChanges();
             return Json(0);
 
-        }//<-- check name end
+        }//<-- inviteFriend end 
+        public JsonResult acceptFriend(FormCollection form)
+        {
+            //0- valid
+            //1- invalid
+            var context = new ApplicationDbContext();
+            int _id =Convert.ToInt32(form["ID"]);
+            string match = User.Identity.GetUserId();
+            var querry = from a in context.Friends where a.Id == _id && a.IdFriend==match select a;
+            //if (querry.Count() == 1) return Json(0);
+            //else return Json(1);
+
+            foreach (var item in querry)
+            {
+                item.Accepted = 1;
+                break;
+               
+            }
+
+            // Submit the changes to the database. 
+            try
+            {
+
+                context.SaveChanges();
+                return Json(0);
+            }
+            catch (Exception e)
+            {
+                return Json(1);
+                
+                // Provide for exceptions.
+            }
+            
+
+            
+        }//<-- accept friend end
+        public JsonResult denieFriend(FormCollection form)
+        {
+            //0- valid
+            //1- invalid
+            var context = new ApplicationDbContext();
+            int _id = Convert.ToInt32(form["ID"]);
+            string match = User.Identity.GetUserId();
+            var querry = from a in context.Friends where a.Id == _id && a.IdFriend == match select a;
+            //if (querry.Count() == 1) return Json(0);
+            //else return Json(1);
+
+            foreach (var item in querry)
+            {
+                item.Accepted = -1;
+                break;
+
+            }
+
+            // Submit the changes to the database. 
+            try
+            {
+
+                context.SaveChanges();
+                return Json(0);
+            }
+            catch (Exception e)
+            {
+                return Json(1);
+
+                // Provide for exceptions.
+            }
+
+
+
+        }//<-- denie friend end
 	}//<--class end
 }//<-- namespace end

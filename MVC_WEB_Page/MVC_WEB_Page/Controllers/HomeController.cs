@@ -44,7 +44,7 @@ namespace MVC_WEB_Page.Controllers
                  var context1 = new ApplicationDbContext();
                  var quer = (from a in context1.Users where a.Id == item.IdUser select a).Take(1);
                  foreach(var x in quer)
-                 homeDefaultPageOutput.Insert(item.Id, item.IdUser, item.date, item.IdFriend, item.Accepted, x.Name+" "+x.Surname);
+                 homeDefaultPageOutput.Insert(item.Id, item.IdUser, item.date, item.IdFriend, item.Accepted, x.Name+" "+x.Surname,x.Image);
              }
 
             //<--get friend invations end

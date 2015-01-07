@@ -10,7 +10,8 @@ namespace MVC_WEB_Page.Models
       public   class NotAcceptedFriend
         {          
             public int Id { get; set; }
-            public string UserCredits { get; set; } 
+            public string UserCredits { get; set; }
+            public string userImg { get; set; } 
             public string IdUser { get; set; }       
             public DateTime date { get; set; }        
             public string IdFriend { get; set; }      
@@ -29,11 +30,11 @@ namespace MVC_WEB_Page.Models
         }//<-- class end
         public ApplicationUser LoggedInUser { get; set; }
         public List<NotAcceptedFriend> NotAcceptedFriends = new List<NotAcceptedFriend>();
-        public void Insert(int _Id, string _IdUser, DateTime _date, string _IdFriend, int _Accepted, String _UserCredits)
+        public void Insert(int _Id, string _IdUser, DateTime _date, string _IdFriend, int _Accepted, String _UserCredits, String _UserImg)
         {
             
 
-            NotAcceptedFriends.Add(new NotAcceptedFriend{Id=_Id, IdUser=_IdUser, date=_date,IdFriend=_IdFriend,Accepted=_Accepted, UserCredits=_UserCredits });
+            NotAcceptedFriends.Add(new NotAcceptedFriend{Id=_Id, IdUser=_IdUser, date=_date,IdFriend=_IdFriend,Accepted=_Accepted, UserCredits=_UserCredits, userImg=_UserImg });
         }
     }//<-- class end
 }//<-- namespace ned
