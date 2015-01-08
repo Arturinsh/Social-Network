@@ -60,12 +60,13 @@
             });
         };
     }
-        function showImage(ID) {
+        function showImage(ID, User) {
                 $.ajax({
                     url: '@Url.Action("returnImage", "Gallery")',
                     type: "post",
                     data: {
-                        id: ID
+                        id: ID,
+                        UserName: User
                     },
                     success: function (data) {
                         $("#imageView").show();

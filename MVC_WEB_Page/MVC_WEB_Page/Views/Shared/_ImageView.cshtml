@@ -31,7 +31,22 @@
             },
             success: function (data) {
                 $("#imageView").html(data);
-                $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 500);
+                $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 200);
+            }
+        });
+    }
+    function prevImg(ID, User) {
+        var text = $("#commentText").val();
+        $.ajax({
+            url: '@Url.Action("prevImage", "Gallery")',
+            type: "post",
+            data: {
+                id: ID,
+                UserName: User
+            },
+            success: function (data) {
+                $("#imageView").html(data);
+                $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 200);
             }
         });
     }
@@ -46,7 +61,24 @@
 </script>
 <hr class="hrCentralBlock" />
 @if (Model.Count() > 0)
-{   <h3 class="text-center" id="bigImage">@Model.First().image.Name</h3>
+{   
+           string next = "", prev = "";
+            if(Model.First().listStatus==1)
+            {
+                next = "disabled";
+            }
+
+            if (Model.First().listStatus == -1)
+            {
+                prev = "disabled";
+            }
+            if (Model.First().listStatus == 2)
+            {
+                prev = "disabled";
+                next = "disabled";
+            } 
+         
+    <h3 class="text-center" id="bigImage">@Model.First().image.Name</h3>
     <div class="col-md-2 leftBlock" >
     </div>
     <div class="col-md-8" >
@@ -60,9 +92,10 @@
     <div class="col-md-2 leftBlock">
     </div>
     <div class="col-md-8 btn-group">
-        <button class="btn btn-default col-md-3"  id="prevImg">Prev</button>
+        <button class="btn btn-default col-md-3" id="prevImg" onclick="prevImg('@Model.First().image.Id','@User.Identity.Name');" @prev>Prev</button>
         <button class="btn btn-default col-md-6 " data-toggle="modal" data-target="#CommentDialog" id="comments">Add Comment</button>
-        <button class="btn btn-default col-md-3"  id="nextImg" onclick="nextImg('@Model.First().image.Id','@User.Identity.Name');">Next</button>
+ 
+        <button class="btn btn-default col-md-3"  id="nextImg" onclick="nextImg('@Model.First().image.Id','@User.Identity.Name');" @next>Next</button>
     </div>
     <div class="col-md-2 righttBlock">
         <button class="btn btn-default col-md-12" onclick="backToTop();">Back to Top</button>
@@ -97,9 +130,9 @@
     <div class="col-md-2 leftBlock">
     </div>
     <div class="col-md-8 btn-group">
-        <button class="btn btn-default col-md-3" id="prevImg">Prev</button>
+        <button class="btn btn-default col-md-3" id="prevImg" onclick="prevImg('@Model.First().image.Id','@User.Identity.Name');" @prev>Prev</button>
         <button class="btn btn-default col-md-6 " data-toggle="modal" data-target="#CommentDialog" id="comments">Add Comment</button>
-        <button class="btn btn-default col-md-3" id="nextImg">Next</button>
+        <button class="btn btn-default col-md-3" id="nextImg" onclick="nextImg('@Model.First().image.Id','@User.Identity.Name');" @next>Next</button>
     </div>
     <div class="col-md-2 righttBlock">
         <button class="btn btn-default col-md-12" onclick="backToImage()">Back to image</button>
