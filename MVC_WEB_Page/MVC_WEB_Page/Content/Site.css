@@ -73,12 +73,14 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
+/*
 input,
 select,
 textarea {
     max-width: 280px;
     margin-left:3px;
 }
+    */
 /****************************/
 /*Base content css */
 /****************************/
@@ -126,6 +128,7 @@ textarea {
     margin-left:auto;
     margin-right:auto;
     margin-bottom:10px;
+    max-height:30em;
 }
 .userUnderImageMenu{
     width:100%;
@@ -167,21 +170,29 @@ textarea {
     color:black;
 
 }
-.sendMessageRow{
-    margin-top:1em;
+
+.msgCreateRow{
+   margin-bottom:1.5em;
 
 }
-.submitSendMessage{
-    margin-left:15%;
-    width:100%;
+div.msgCreateRow input[type="text"]{
 
+min-width:60%;
 }
-.textboSend{
-    width:20Em;
 
+div.msgCreateRow input{
+
+min-width:100%;
 }
-.centerPagintion{
-    margin: 0 auto 0 auto;
+div.msgCreateRow textarea{
+
+min-width:60%;
+min-height:20em;
+}
+
+
+.centerPagintion {
+ 
 }
 /*Start page*/
 .rowWell{
@@ -236,12 +247,18 @@ textarea {
 
 }
 
-/*Profile managment*/
+/**********Profile managment*/
 .formMargin{
 
-    margin-top:1em;
+    margin-bottom:1.5em;
 
 }
+/*Profile passw0rd managment*/
+div.formMargin input[type="text"]{
+
+min-width:60%;
+}
+
 /*gallery*/
 .gallleryImgHeight{
  height:15em;
@@ -272,3 +289,12 @@ width:auto;
     right: 0;
     margin: auto;
 }
+
+.userImageProfileEdit{
+ margin-top:20px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:10px;
+    max-height:30em;
+}
+

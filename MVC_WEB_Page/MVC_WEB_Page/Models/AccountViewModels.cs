@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC_WEB_Page.Anotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
@@ -88,11 +89,14 @@ namespace MVC_WEB_Page.Models
         [DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }
         [Required]
+        [StringLength(15, ErrorMessage = "The name must be at least 3 characters long.", MinimumLength = 3)]
         public String Name { get; set; }
         [Required]
+        [StringLength(15, ErrorMessage = "The surname must be at least 3 characters long.", MinimumLength = 3)]
         public String Surname { get; set; }
      
         [Required]
+        [GenderValidator(ErrorMessage = "Wrong gender")]
         public int Gender { get; set; }
         [Required]
         public HttpPostedFileBase Image { get; set; }
@@ -129,5 +133,19 @@ namespace MVC_WEB_Page.Models
         public string Email { get; set; }
     }
 
-    
+    public class EditUserViewmodel
+    {
+        [Required]
+        public DateTime BirthDate { get; set; }
+        [Required]
+        [StringLength(15, ErrorMessage = "The name must be at least 3 characters long.", MinimumLength = 3)]
+        public String Name { get; set; }
+        [Required]
+        [StringLength(15, ErrorMessage = "The surname must be at least 3 characters long.", MinimumLength = 3)]
+        public String Surname { get; set; }
+        [GenderValidator(ErrorMessage = "Wrong gender")]
+        public int Gender { get; set; }
+        public HttpPostedFileBase Image { get; set; }
+        public String ImageoOld { get; set; }
+    }
 }//<-- namespace end

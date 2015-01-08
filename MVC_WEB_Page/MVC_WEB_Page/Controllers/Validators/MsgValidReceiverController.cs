@@ -16,7 +16,7 @@ namespace MVC_WEB_Page.Controllers.Validators
         {
             return View();
         }//<-- Index end
-
+        [ValidateAntiForgeryToken]
         public JsonResult CheckName(FormCollection form)
         {
             string idReceiver = form["username"];

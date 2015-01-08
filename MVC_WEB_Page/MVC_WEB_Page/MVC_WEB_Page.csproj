@@ -157,6 +157,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anotations\GenderValidator.cs" />
     <Compile Include="Anotations\MsgValidReceiver.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\Validators\InviteValidFriendController.cs" />
     <Compile Include="Controllers\Validators\MsgValidReceiverController.cs" />
+    <Compile Include="Controllers\Validators\ValidProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +231,18 @@
     <Compile Include="Migrations\201501080304338_CommentsSender.cs" />
     <Compile Include="Migrations\201501080304338_CommentsSender.Designer.cs">
       <DependentUpon>201501080304338_CommentsSender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501081006084_user table tweeks.cs" />
+    <Compile Include="Migrations\201501081006084_user table tweeks.Designer.cs">
+      <DependentUpon>201501081006084_user table tweeks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501081017357_change type user name.cs" />
+    <Compile Include="Migrations\201501081017357_change type user name.Designer.cs">
+      <DependentUpon>201501081017357_change type user name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501081023580_user field lenght.cs" />
+    <Compile Include="Migrations\201501081023580_user field lenght.Designer.cs">
+      <DependentUpon>201501081023580_user field lenght.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -502,6 +516,7 @@
     <Folder Include="Views\InviteValidFriend\" />
     <Folder Include="Views\MsgValidReceiver\" />
     <Folder Include="Views\UserParameters\" />
+    <Folder Include="Views\ValidProfile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -555,6 +570,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501080304338_CommentsSender.resx">
       <DependentUpon>201501080304338_CommentsSender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501081006084_user table tweeks.resx">
+      <DependentUpon>201501081006084_user table tweeks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501081017357_change type user name.resx">
+      <DependentUpon>201501081017357_change type user name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501081023580_user field lenght.resx">
+      <DependentUpon>201501081023580_user field lenght.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

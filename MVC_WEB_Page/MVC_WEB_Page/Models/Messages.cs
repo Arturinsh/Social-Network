@@ -18,6 +18,7 @@ namespace MVC_WEB_Page.Models
         public string IdAuthor { get; set; }        
         [Required]
         [StringLength(128, MinimumLength = 5, ErrorMessage="Invalid input")]
+        [Display(Name="Receiver")]
         public string IdReceiver { get; set; }
         [StringLength(128)]
         public string Title { get; set; }

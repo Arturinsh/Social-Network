@@ -49,12 +49,14 @@
             </div>
         }
         <div class="row">
-            <ul class="pagination centerPagintion">
-                @foreach (var item in Model.paginationUrls)
-                {
-                    @Html.Raw(item);
-                }
-            </ul>
+            <div class="col-md-8 col-md-offset-2">
+                <ul class="pagination centerPagintion">
+                    @foreach (var item in Model.paginationUrls)
+                    {
+                        @Html.Raw(item);
+                    }
+                </ul>
+            </div>
         </div>
         </div><!-- second column end-->
    

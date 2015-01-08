@@ -261,7 +261,7 @@ namespace MVC_WEB_Page.Controllers
             var context = new ApplicationDbContext();
             string match = User.Identity.GetUserId();
 
-            var friends = from a in context.Friends where a.IdUser == match select a;
+            var friends = from a in context.Friends where a.IdUser == match && a.Accepted==1 select a;
 
             foreach (var item in friends)
             {
@@ -270,7 +270,7 @@ namespace MVC_WEB_Page.Controllers
                 foreach (var x in getFriendCredits) users.Add(x.Name + "-" + x.Surname + " - (" + x.Email + ")");
 
             }
-            friends = from a in context.Friends where a.IdFriend == match select a;
+            friends = from a in context.Friends where a.IdFriend == match && a.Accepted == 1  select a;
 
             foreach (var item in friends)
             {

@@ -33,46 +33,39 @@
          {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            
-                @Html.LabelFor(model => model.messages.IdReceiver, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-                <div class="col-md-9">
-                @Html.EditorFor(model => model.messages.IdReceiver, new { htmlAttributes = new { @class = "form-control autocomplete textboSend", @onchange = "check ()" } })
-                @Html.ValidationMessageFor(model => model.messages.IdReceiver, "", new { @class = "text-danger" })
-                    <span id="divStatus" />
-                </div>
-                </div>
-             </div>
-             <div class="row sendMessageRow">   
-            <div class="form-group">
-                <div class="col-md-3">
-                @Html.LabelFor(model => model.messages.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-                <div class="col-md-9"> 
-                @Html.EditorFor(model => model.messages.Title, new { htmlAttributes = new { @class = "form-control textboSend" } })
-                @Html.ValidationMessageFor(model => model.messages.Title, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            </div>
-            <div class="row sendMessageRow">   
-            <div class="form-group">
-                <div class="col-md-3">
-                @Html.LabelFor(model => model.messages.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-                <div class="col-md-9">
-                @Html.TextAreaFor(m => m.messages.Content, new { @class = "form-control textboSend" })
-                @Html.ValidationMessageFor(model => model.messages.Content, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            </div>
 
-            <div class="row sendMessageRow">   
-            <div class="form-group">
-                <div class="col-md-12">
-                    <input type="submit" value="Send" id="submitBtn" class="btn btn-default submitSendMessage" />
-                 </div>
-                </div>
-            </div>
+    <div class="row msgCreateRow">
+        <div class="col-md-10 col-md-offset-1">
+            @Html.Label(" Start typing for friend suggestions or enter user e-mail", htmlAttributes: new { @class = "control-label " })
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+            @Html.EditorFor(model => model.messages.IdReceiver, new { htmlAttributes = new { @class = "form-control autocomplete ", @onchange = "check ()" } })
+            @Html.ValidationMessageFor(model => model.messages.IdReceiver, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row msgCreateRow">
+        <div class="col-md-10 col-md-offset-1">
+            @Html.LabelFor(model => model.messages.Title, htmlAttributes: new { @class = "control-label " })
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+            @Html.EditorFor(model => model.messages.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.messages.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row msgCreateRow">
+        <div class="col-md-10 col-md-offset-1">
+            @Html.LabelFor(model => model.messages.Content, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+            @Html.TextAreaFor(m => m.messages.Content, new { @class = "form-control " })
+            @Html.ValidationMessageFor(model => model.messages.Content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row msgCreateRow">
+        <div class="col-md-2 col-md-offset-9">
+            <input type="submit" value="Send" id="submitBtn" class="btn btn-primary submitSendMessage" />
+        </div>
+    </div>
 
          }
              

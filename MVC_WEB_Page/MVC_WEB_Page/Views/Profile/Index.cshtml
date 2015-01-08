@@ -1,4 +1,4 @@
-﻿@model MVC_WEB_Page.Models.ApplicationUser
+﻿@model MVC_WEB_Page.Models.EditUserViewmodel
 
 @{
     ViewBag.Title = "Profile";
@@ -35,34 +35,87 @@
 
 
     </div><!-- first column end-->
-    <div class="col-md-9 centralBlock">
+    <div class="col-md-7 centralBlock">
         <hr class="hrCentralBlock" />
        
-
-        @using (Html.BeginForm("#", "#", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("changeAcoountImage", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3>Change picture</h3>
+            <div class="row formMargin">
+                <div class="col-md-10 col-md-offset-1">
+                    <img src="~/Content/Images/Profiles/@Model.ImageoOld" class="img-responsive userImageProfileEdit" />
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    @Html.LabelFor(m => m.Image, new { @class = " control-label" })
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <input class="form-control" data-val="true" data-val-required="The Image field is required." id="Image" name="Image" type="file" value="" />
+                </div>
+            </div>
+      
+            
+            <div class="row formMargin">
+                <div class="col-md-3 col-md-offset-8" >
+                    
+                    <input type="submit" value="Change picture" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+        <hr />
+        @using (Html.BeginForm("changeAcoountInfo", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
                @Html.AntiForgeryToken()
-               @Html.ValidationSummary("", new { @class = "text-danger" })
- 
+               <h3>Change base information</h3>
                  <div class="row formMargin">
-                   <div class="col-md-3">
-                        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-                   </div>
-                   <div class="col-md-9">
-                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                   </div>
+                     <div class="col-md-10 col-md-offset-1">
+                         @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                     </div>
+                     <div class="col-md-10 col-md-offset-1">
+                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                         @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                     </div>
                 </div>
-    
-    
-    
-    
-    
-    <div class="row formMargin">
-               <div class="col-md-7">
-                   <input type="submit" value="Edit Profile" class="btn btn-default" />
-               </div>      
-    </div>
-}
+                <div class="row formMargin">
+                     <div class="col-md-10 col-md-offset-1">
+                         @Html.LabelFor(m => m.Surname, new { @class = "control-label" })
+                     </div>
+                     <div class="col-md-10 col-md-offset-1">
+                         @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+                         @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+                     </div>
+                </div>
+               <div class="row formMargin">
+                   <div class="col-md-10 col-md-offset-1">
+                       @Html.LabelFor(m => m.Gender, new { @class = "control-label" })
+                       </div>
+                   <div class="col-md-10 col-md-offset-1">
+                       @Html.DropDownListFor(m => m.Gender, new SelectList(
+                          new List<Object>{
+                            new { value = 0 , text = "Male"  },
+                            new { value = 1 , text = "Female" }
+                          }, "value", "text", 2), new { @class = "form-control" })
+                       @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                   </div>
+                   </div>
+            
+                  <div class="row formMargin">
+                      <div class="col-md-10 col-md-offset-1">
+                          @Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
+                          </div>
+                          <div class="col-md-10 col-md-offset-1">
+                              @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control datepicker" })
+                          </div>
+                      </div>
+                
+
+                   <div class="row formMargin">
+                   <div class="col-md-3 col-md-offset-8">
+                   <input type="submit" value="Edit Profile" class="btn btn-primary" />
+                   </div>      
+                   </div>
+                  }
+             <hr />
 
 
 
@@ -75,3 +128,32 @@
 
 </div><!--Row end-->
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $('.datepicker').datepicker(); //Initialise any date pickers
+</script>
+}
+<script type="text/javascript">
+    function check() {
+        var name = $(".autocomplete").val(); //Value entered in the text box
+        var status = $("#divStatus"); //DIV object to display the status message
+        status.html("Checking....") //While our Thread works, we will show some message to indicate the progress
+
+        //jQuery AJAX Post request
+
+        $.post("/MsgValidReceiver/CheckName", { username: name },
+            function (data) {
+                if (data == 0) {
+                    status.html(name + " is available!");
+                    document.getElementById("submitBtn").disabled = false;
+                } else {
+                    status.html(name + " is not available!");
+                    document.getElementById("submitBtn").disabled = true;
+                }
+
+            });
+
+    };
+
+</script>

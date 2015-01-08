@@ -5,6 +5,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+using MVC_WEB_Page.Anotations;
 
 namespace MVC_WEB_Page.Models
 {
@@ -13,9 +15,15 @@ namespace MVC_WEB_Page.Models
     {
         /*Modifications start */
            //Add user birthdate
+          [Required]
           public DateTime BirthDate { get; set; }
+          [Required]
+          [StringLength(15, ErrorMessage = "The name must be at least 3 characters long.", MinimumLength = 3)]
           public String Name{ get; set; }
+          [Required]
+          [StringLength(15, ErrorMessage = "The surname must be at least 3 characters long.", MinimumLength = 3)]
           public String Surname { get; set; }
+          [GenderValidator(ErrorMessage="Wrong gender")]
           public int  Gender{get;set;}
           public String Image { get; set; }
           

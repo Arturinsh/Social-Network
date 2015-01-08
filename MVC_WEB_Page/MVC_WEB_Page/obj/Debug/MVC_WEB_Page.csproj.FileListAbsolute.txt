@@ -262,3 +262,8 @@ E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.dll
 E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.pdb
 E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.Comments.resources
 E:\IT\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.CommentsSender.resources
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.Comments.resources
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.CommentsSender.resources
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.usertabletweeks.resources
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.changetypeusername.resources
+C:\Users\Cronos\Documents\GitHub\Social-Network\MVC_WEB_Page\MVC_WEB_Page\obj\Debug\MVC_WEB_Page.Migrations.userfieldlenght.resources
