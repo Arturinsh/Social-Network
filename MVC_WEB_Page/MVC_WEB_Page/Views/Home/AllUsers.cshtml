@@ -11,27 +11,12 @@
                       $("#Search").addClass("active");
                       });
                       </script>  
-<div class="row baseMainRow">
-   
-       <div class="col-md-3 leftBlock">
-       
-               <hr class="hrCentralBlock" />
-       
-       
-   </div><!-- first column end-->
-   
-       <div class="col-md-7 centralBlock">
-               <hr class="hrCentralBlock" />
-       
-        @using (Html.BeginForm("SearchUsers", "Home", FormMethod.Post, new { id = "form" }))
-        {
-            @Html.TextBox("person_name")
-            <input type="submit" value="Search" class="btn btn-primary" />
-        }
 
-        <script type="text/javascript">
+
+
+<script type="text/javascript">
             $(function () {
-            
+
                 $("#form").on("submit", function (e) {
 
                     e.preventDefault();
@@ -48,8 +33,36 @@
                     });
                 });
             });
-           
-               </script>
+
+</script>
+
+<div class="row baseMainRow">
+   
+<div class="col-md-3 leftBlock">
+<hr class="hrCentralBlock" />
+@using (Html.BeginForm("SearchUsers", "Home", FormMethod.Post, new { id = "form" }))
+{
+    <div class="row searchFormBlock">
+        <div class="col-md-10 col-md-offset-1 friendsSearch SearchLabel">
+            @Html.Label("Search friend")
+         </div>
+            <div class="col-md-10 col-md-offset-1 friendsSearch">
+                @Html.TextBox("person_name")
+            </div>
+        <div class="col-md-4 col-md-offset-5 friendsSearch">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+        </div>
+}
+       
+</div><!-- first column end-->
+   
+       <div class="col-md-7 centralBlock">
+               <hr class="hrCentralBlock" />
+       
+      
+
+        
        
                <br />
                <div id="content">

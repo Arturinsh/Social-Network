@@ -24,39 +24,42 @@
     <div class="col-md-9 centralBlock">
         <hr class="hrCentralBlock" />
 
-
-        <div class="row messageDes">
-            <div class="col-md-2">Receiver</div>
-            <div class="col-md-5">Title</div>
-            <div class="col-md-3"> Date</div>
-            <div class="col-md-2">Actions</div>
-        </div>
-        @foreach (var item in Model.messages)
-        {
-            <div class="row messageRow">
-                <a href="@Url.Action("Details", new { id = item.Id })" class="urlNoDecoration">
-                    <div class="col-md-2"> @Html.DisplayFor(modelItem => item.IdReceiver)</div>
-                    <div class="col-md-5"> @Html.DisplayFor(modelItem => item.Title)</div>
-                    <div class="col-md-3"> @Html.DisplayFor(modelItem => item.Date)</div>
-                </a>
-                <div class="col-md-2">
-                    <a href="@Url.Action("Delete", new { id = item.Id })">
-                        <i class="glyphicon glyphicon-remove"></i>
-                    </a>
-                </div>
-            </div>
-        }
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <ul class="pagination centerPagintion">
-                    @foreach (var item in Model.paginationUrls)
-                    {
-                        @Html.Raw(item);
+            <div class="col-md-11">
+                <div class="row messageDes">
+                    <div class="col-md-2">Receiver</div>
+                    <div class="col-md-5">Title</div>
+                    <div class="col-md-3"> Date</div>
+                    <div class="col-md-2">Actions</div>
+                </div>
+                @foreach (var item in Model.messages)
+                {
+                    <div class="row messageRow">
+                        <a href="@Url.Action("Details", new { id = item.Id })" class="urlNoDecoration">
+                            <div class="col-md-2"> @Html.DisplayFor(modelItem => item.IdReceiver)</div>
+                            <div class="col-md-5"> @Html.DisplayFor(modelItem => item.Title)</div>
+                            <div class="col-md-3"> @Html.DisplayFor(modelItem => item.Date)</div>
+                        </a>
+                        <div class="col-md-2">
+                            <a href="@Url.Action("Delete", new { id = item.Id })">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <ul class="pagination centerPagintion">
+                            @foreach (var item in Model.paginationUrls)
+                            {
+                                @Html.Raw(item);
 
-                    }
-                </ul>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
+        </div>
     </div><!-- second column end-->
 
 </div>

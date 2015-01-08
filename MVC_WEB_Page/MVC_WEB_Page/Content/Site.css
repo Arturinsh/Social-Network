@@ -115,7 +115,7 @@ textarea {
    margin-top:1%;
 }
 .hrCentralBlock{
-    margin-top:66px;
+    margin-top:5.25em;
 
 }
 .rightBlock{
@@ -151,19 +151,28 @@ textarea {
 }
 /*user messages*/
 .messageDes{
-    background-color:#EEEFEE;
+    background-color:#e6e6e6;
     min-height:3em;
     font-weight:bold;
-    
+    border-top-left-radius:2px;
+    border-top-right-radius:2px;
+    border-bottom-left-radius:2px;
+    border-bottom-right-radius:2px;
 }
 .messageRow{
     min-height:2em;
     vertical-align:middle;
+    
    
 }
 .messageRow:hover{
-    background-color:#F9FCF8;
+    background-color:#c1bd16;
     min-height:2em;
+      border-top-left-radius:2px;
+    border-top-right-radius:2px;
+    border-bottom-left-radius:2px;
+    border-bottom-right-radius:2px;
+    text-decoration:none;
 }
 .urlNoDecoration{
  text-decoration:none;
@@ -246,7 +255,17 @@ min-height:20em;
     min-height:18em;
 
 }
-
+.friendsStartThumb{
+text-align:center;
+}
+.friendsStartThumb:hover{
+    background-color:#e6e6e6;
+    border-bottom-left-radius:1em;
+    border-top-left-radius:1em;
+    border-bottom-right-radius:1em;
+    border-top-right-radius:1em;
+    text-align:center;
+}
 /**********Profile managment*/
 .formMargin{
 
@@ -297,4 +316,23 @@ width:auto;
     margin-bottom:10px;
     max-height:30em;
 }
+/*Search all friends*/
+.friendsSearch{
+    margin-top:1em;
+ 
+}
+.searchFormBlock{
+    border-top-left-radius:1em 1.5em;
+    border-bottom-right-radius:1em 1.5em;
+    border-top-right-radius:0.2em;
+    border-bottom-left-radius:0.2em;
+    background-color:#c1bd16;
+    width:98%;
+    min-height:12em;
+    margin:0 auto 0 auto;
 
+}
+.SearchLabel{
+    font-size:1.35em;
+
+}

@@ -24,6 +24,7 @@
 
                         $("#profileFA" + inviter).remove();
                         $("#profileFB" + inviter).remove();
+                        $("#profileFC" + inviter).remove();
                         document.getElementById("InviteYes").disabled = true;
 
                     } else {
@@ -80,26 +81,41 @@
     <div class="col-md-7 centralBlock">
         <hr class="hrCentralBlock" />
 
+        <div class="row messageRow messageDes">
+            <div class="col-md-5 col-md-offset-0">
+                Invitations from
 
-        @foreach (var item in Model.NotAcceptedFriends)
-        {
-
-            <div class="col-md-5 col-md-offset-0" @Html.Raw("id='profileFA" + item.IdUser + "'")>
-                <a href="@Url.Action( "ReturnUser","Home", new { user = item.IdUser})">  @item.UserCredits</a>
-                
             </div>
             <div class="col-md-5">
-                @item.date
+                Date sent
             </div>
-            
-            <div class="col-md-2 col-md-offset-0" @Html.Raw("id='profileFB" + item.IdUser + "'")>
-                <a href="#" onclick="friendsNew('1', '@item.UserCredits', '@item.Id', '@item.userImg','@item.IdUser');" data-toggle="modal" data-target="#inviteDialog"><span class="glyphicon glyphicon-ok-circle"></span></a>
-                
+
+            <div class="col-md-2 col-md-offset-0">
+                Actions
+
 
             </div>
-        }
+        </div>
+        @foreach (var item in Model.NotAcceptedFriends)
+{
+    <div class="row messageRow">
+        <div class="col-md-5 col-md-offset-0 " @Html.Raw("id='profileFA" + item.IdUser + "'")>
+            <a href="@Url.Action( "ReturnUser","Home", new { user = item.IdUser})">  @item.UserCredits</a>
+
+        </div>
+        <div class="col-md-5 @Html.Raw("id='profileFC" + item.IdUser + "'")">
+            @item.date
+        </div>
+
+        <div class="col-md-2 col-md-offset-0" @Html.Raw("id='profileFB" + item.IdUser + "'")>
+            <a href="#" onclick="friendsNew('1', '@item.UserCredits', '@item.Id', '@item.userImg','@item.IdUser');" data-toggle="modal" data-target="#inviteDialog"><span class="glyphicon glyphicon-ok-circle"></span></a>
+
+
+        </div>
+    </div>
+}
         @if (Model.NotAcceptedFriends.Count == 0)
-        { <span>"Currently you dont have any friendship request"</span> }
+        { <span>"Currently you dont have any pending requests"</span> }
 
 
 

@@ -132,7 +132,8 @@
                         </div>
 
                     }
-
+                    @if (Model.annoucments.Count == 0)
+                    { <span>"Currently you dont have any announcment request"</span> }
                 </div>
             </div>
 
@@ -156,7 +157,7 @@
             
             @foreach (var item in Model.friendsMyStart)
             {
-                <div class="col-md-3">
+                <div class="col-md-3 friendsStartThumb">
                     <div class="row">
                         <a href="@Url.Action( "ReturnUser", new { user = item.Id})">
                             <div class="col-md-12 friendshomeStart"><img src="~/Content/Images/Profiles/@item.Image" class="img-responsive userImage" /></div>
@@ -170,8 +171,9 @@
                  </div>
                      
                  </div>
-                
-            }
+
+            }   @if (Model.friendsMyStart.Count == 0)
+            { <span>"Currently you dont have any friends"</span> }
 
         </div>
         <div class="row">

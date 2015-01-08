@@ -2,7 +2,7 @@
 
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Messages";
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
 <script>
@@ -17,58 +17,51 @@
 <div class="row baseMainRow">
    
        <div class="col-md-3 leftBlock">
-               <h2>@ViewBag.Title</h2>
-               <hr />
-       
-       
+           <h2>@ViewBag.Title</h2>
+           <hr />
+           <div class="btn-group-vertical userUnderImageMenu">
+               <button onclick="location.href='/Inbox'" type="button" class="btn btn-default baseBtn "><span class="glyphicon glyphicon-envelope"></span> Inbox</button>
+               <button onclick="location.href='/Outbox'" type="button" class="btn btn-default baseBtn"><span class="glyphicon glyphicon-new-window"></span>Outbox</button>
+               <button onclick="location.href ='/SendMessage'" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-pencil"></span>Send Message</button>
+           </div>
    </div><!-- first column end-->
-       <div class="col-md-9 centralBlock">
-               <hr class="hrCentralBlock" />
-               @using (Html.BeginForm("Create", "Messages"))
+    <div class="col-md-9 centralBlock">
+        <hr class="hrCentralBlock" />
+        @using (Html.BeginForm("Create", "Messages"))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="row sendMessageRow">
-        <div class="form-group">
-
-            <div class="col-md-12 ">
-                Send Message to <b>@ViewBag.ReceiverName @ViewBag.ReceiverSurname</b>
-            </div>
-            <div class="col-md-0">
-                <input type="text" id="messages_IdReceiver" name="messages.IdReceiver" class="hidden" value="@ViewBag.ReceiverMail">
-            </div>
-        </div>
-    </div>
-
-            <div class="row sendMessageRow">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        @Html.LabelFor(model => model.messages.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </div>
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.messages.Title, new { htmlAttributes = new { @class = "form-control textboSend" } })
-                        @Html.ValidationMessageFor(model => model.messages.Title, "", new { @class = "text-danger" })
-                    </div>
+            <div class="row msgCreateRow">
+                <div class="col-md-10 col-md-offset-1">
+                    Send Message to <b>@ViewBag.ReceiverName @ViewBag.ReceiverSurname</b>
                 </div>
-            </div>
-            <div class="row sendMessageRow">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        @Html.LabelFor(model => model.messages.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </div>
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(m => m.messages.Content, new { @class = "form-control textboSend" })
-                        @Html.ValidationMessageFor(model => model.messages.Content, "", new { @class = "text-danger" })
-                    </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <input type="text" id="messages_IdReceiver" name="messages.IdReceiver" class="hidden" value="@ViewBag.ReceiverMail">
                 </div>
             </div>
 
-            <div class="row sendMessageRow">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="submit" value="Send" class="btn btn-default submitSendMessage" />
-                    </div>
+            <div class="row msgCreateRow">
+                <div class="col-md-10 col-md-offset-1">
+                    @Html.LabelFor(model => model.messages.Title, htmlAttributes: new { @class = "control-label " })
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    @Html.EditorFor(model => model.messages.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.messages.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row msgCreateRow">
+                <div class="col-md-10 col-md-offset-1">
+                    @Html.LabelFor(model => model.messages.Content, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    @Html.TextAreaFor(m => m.messages.Content, new { @class = "form-control " })
+                    @Html.ValidationMessageFor(model => model.messages.Content, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row msgCreateRow">
+                <div class="col-md-2 col-md-offset-9">
+                    <input type="submit" value="Send" id="submitBtn" class="btn btn-primary submitSendMessage" />
                 </div>
             </div>
 
