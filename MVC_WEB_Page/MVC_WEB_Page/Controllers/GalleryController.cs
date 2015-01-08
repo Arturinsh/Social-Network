@@ -24,7 +24,14 @@ namespace MVC_WEB_Page.Controllers
             var gallery = from c in db.Galleries
                           where c.UserId == currentUsersID
                           select c;
-            return View(gallery.ToList());
+            List<ImageView> images = new List<ImageView>();
+            List<UsersGalleries> gal = gallery.ToList();
+            foreach (var x in gal)
+            {
+                var cmm = db.Comments.Where(d => d.IdImage == x.Id).ToList();
+                images.Add(new ImageView() { image = x, comments = cmm });
+            }
+            return View(images);
         }
 
         // GET: /Gallery/Details/5
@@ -64,8 +71,6 @@ namespace MVC_WEB_Page.Controllers
             {
                 UserId = currentUsersID,
                 Active = true,
-                IdComment = 1,
-
             };
             if (picture != null && image.UserId != null)
             {
@@ -175,8 +180,10 @@ namespace MVC_WEB_Page.Controllers
             UsersGalleries usersgallery = context.Galleries.Find(id);
             if (User.Identity.GetUserId() == usersgallery.UserId)
             {
+                var comments = context.Comments.Where(d => d.IdImage == usersgallery.Id);
                 var path = Path.Combine(Server.MapPath("~/Content/Images/" + User.Identity.Name + "/"), usersgallery.Image);
                 context.Galleries.Remove(usersgallery);
+                context.Comments.RemoveRange(comments);
                 context.SaveChanges();
                 try
                 {
@@ -188,8 +195,39 @@ namespace MVC_WEB_Page.Controllers
             var gallery = from c in db.Galleries
                           where c.UserId == currentUsersID
                           select c;
-            List<UsersGalleries> images = gallery.ToList();
+            List<UsersGalleries> imgs = gallery.ToList();
+            List<ImageView> images = new List<ImageView>();
+            foreach (var x in imgs)
+            {
+                var cmm = db.Comments.Where(d => d.IdImage == x.Id).ToList();
+                images.Add(new ImageView() { image = x, comments = cmm });
+            }
             return PartialView("_GalleryView", images);
+        }
+        public PartialViewResult returnImage(int id)
+        {
+            var context = new ApplicationDbContext();
+            UsersGalleries usersgallery = context.Galleries.Find(id);
+            List<ImageView> image = new List<ImageView>();
+            var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
+            image.Add(new ImageView() { image = usersgallery,comments=cmm});
+            return PartialView("_ImageView", image);
+        }
+        public PartialViewResult addComment(int id, string commentText)
+        {
+            var context = new ApplicationDbContext();
+            Comments comment = new Comments() 
+            { IdImage = id, IdUser = User.Identity.GetUserId(), 
+                date = DateTime.Now,Content=commentText };
+            var user = context.Users.Find(User.Identity.GetUserId());
+            comment.SenderName = user.Name + " " +user.Surname;
+            context.Comments.Add(comment);
+            context.SaveChanges();
+            UsersGalleries usersgallery = context.Galleries.Find(id);
+            List<ImageView> image = new List<ImageView>();
+            var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
+            image.Add(new ImageView() { image = usersgallery, comments = cmm });
+            return PartialView("_ImageView", image);
         }
         protected override void Dispose(bool disposing)
         {

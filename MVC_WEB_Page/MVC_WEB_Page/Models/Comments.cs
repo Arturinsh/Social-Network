@@ -19,6 +19,8 @@ namespace MVC_WEB_Page.Models
         [Required]
         public int IdImage { get; set; }
         [Required]
-        public string Content { get; set; }  
+        public string Content { get; set; }
+        [Required]
+        public string SenderName { get; set; } 
     }
 }

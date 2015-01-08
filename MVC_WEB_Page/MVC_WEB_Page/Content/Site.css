@@ -249,12 +249,23 @@ textarea {
 .galleryA {
     height:10em;
     display:block;
+    
 }
 .galleryImg{
     height:auto;
     max-height:10em;
     width:auto;
     position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.galleryBigImage {
+max-height:40em;
+width:auto;
+    position: relative;
     top: 0;
     bottom: 0;
     left: 0;

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_WEB_Page.Models.UsersGalleries>
+﻿@model IEnumerable<MVC_WEB_Page.Models.ImageView>
 
 @{
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
@@ -26,20 +26,34 @@
                     success: function (data) {
                         $("#galleryView").html(data);
                         $("#DeleteYes").hide();
+                        $("#imageView").hide();
                         $("#imageName").text("Image " + name + " deleted!");
                     }
                 });
             };
         }
-        function showImage(image)
+ 
+        function showImage(ID)
         {
-
+            $.ajax({
+                url: '@Url.Action("returnImage", "Gallery")',
+                type: "post",
+                data: {
+                    id: ID
+                },
+                success: function (data) {
+                    $("#imageView").show();
+                    $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 500);
+                    $("#imageView").html(data);
+                }
+            });
         }
+        
     </script>
 </head>
 <body>
     <div class="row baseMainRow">
-        <div class="col-md-2 rightBlock">
+        <div class="col-md-2 leftBlock">
             <button onclick="location.href='/AddGallery'" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-plus"></span>Add Image</button>
         </div><!-- third column end-->
         <hr class="hrCentralBlock" />
@@ -51,28 +65,11 @@
         </div><!-- second column end-->
         <div class="col-md-1 leftBlock">
         </div>
-        <div class="col-md-12 centralBlock" id="galleryView">
+        <div class="col-md-12 centralBlock" id="imageView" hidden="hidden">
             @Html.Partial("_ImageView", Model)
         </div><!-- second column end-->
     </div>
     <div class="modal fade" id="deleteDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title text-danger" id="myModalLabel">Delete</h4>
-                </div>
-                <div class="modal-body">
-                    <img id="imageSrc" />
-                    <h3 id="imageName" class="text-danger"></h3>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary " id="DeleteYes">Yes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="editDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

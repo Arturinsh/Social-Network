@@ -1,1 +1,83 @@
-﻿
+﻿@model IEnumerable<MVC_WEB_Page.Models.ImageView>
+
+<script>
+    $(document).ready(function () {
+            if (window.removeEventListener) {
+                window.removeEventListener('DOMMouseScroll', wheel, false);
+            }
+            window.onmousewheel = document.onmousewheel = document.onkeydown = null;
+    });
+    function sendComment(ID) {
+        var text = $("#commentText").val();
+        $.ajax({
+            url: '@Url.Action("addComment", "Gallery")',
+            type: "post",
+            data: {
+                id: ID,
+                commentText: text
+            },
+            success: function (data) {
+                $("#imageView").html(data);
+                $('html,body').animate({ scrollTop: $("#comments").offset().top }, 500);
+            }
+        });
+    }
+</script>
+<hr class="hrCentralBlock" />
+@if (Model.Count() > 0)
+{   <h3 class="text-center" id="bigImage">@Model.First().image.Name</h3>
+    <div class="col-md-2 leftBlock" >
+    </div>
+    <div class="col-md-8" >
+        <img src="~/Content/Images/@User.Identity.Name.ToString()/@Model.First().image.Image" class="img-responsive galleryBigImage"/>
+    </div>
+    <div class="col-md-2 rightBlock" >
+    </div>
+   
+}
+<hr class="hrCentralBlock" />
+<div class="col-md-3 leftBlock">
+</div>
+<div class="col-md-6 centralBlock">
+    <div class="list-group" >
+        @foreach (var item in Model.First().comments)
+        {
+            <div class="list-group-item">
+                <a href="@Url.Action( "ReturnUser","Home", new { user = item.IdUser})">
+                    <h4 class="list-group-item-heading" id="commenId">@item.SenderName</h4>
+            </a>
+                <h5 class="list-group-item-heading">@item.date</h5>
+                <p class="list-group-item-text">@item.Content</p>
+            </div>
+        }
+</div>
+</div>
+<div class="col-md-3 righttBlock">
+    
+</div>
+
+<div class="col-md-4 leftBlock">
+</div>
+<div class="col-md-4">
+    <button class="btn btn-default col-md-12" data-toggle="modal" data-target="#CommentDialog" id="comments">Add Comment</button>
+</div>
+<div class="col-md-4 righttBlock">
+</div>
+<div class="modal fade" id="CommentDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Comment</h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="commentText" rows="3" class="form-control center-block"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="sendComment('@Model.First().image.Id');">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Scrolled <span>0</span> times.</p>

@@ -1,24 +1,19 @@
-﻿@model IEnumerable<MVC_WEB_Page.Models.UsersGalleries>
+﻿@model IEnumerable<MVC_WEB_Page.Models.ImageView>
 
-<script>
-
-</script>
 <div class="row ">
     @foreach (var item in Model)
     {
-        <div class="col-md-3 gallleryImgHeight thumbnail">
+        <div class="col-md-3 gallleryImgHeight thumbnail" onclick="showImage(@item.image.Id);">
             <div class="col-md-12 ">
-                <a href="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" class=" galleryA">
-                    <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.Image" class="galleryImg" />
+                <a  class="galleryA">
+                    <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.image.Image" class="galleryImg" />
                 </a>
             </div>
-            <div class="col-md-12 text-center">
-                <a href="~/Content/Images/@User.Identity.Name.ToString()/@item.Image">
-                    @item.Name
-                </a>
+            <div class="col-md-12 text-center" onclick="showImage(@item.image.Id);">
+                <a>@item.image.Name</a>
             </div>
             <div class="col-md-12">
-                <a href="#" onclick="deleteImage('@item.Id','@item.Name','@item.Image');" data-toggle="modal" data-target="#deleteDialog"><span class="glyphicon glyphicon-remove"></span>Delete</a>
+                <a href="#" onclick="deleteImage('@item.image.Id','@item.image.Name','@item.image.Image');" data-toggle="modal" data-target="#deleteDialog"><span class="glyphicon glyphicon-remove"></span>Delete</a>
             </div>
         </div>
     }
