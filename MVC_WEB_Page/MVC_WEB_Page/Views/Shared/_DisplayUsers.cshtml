@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+﻿@model MVC_WEB_Page.Models.UsersOutput
            <script>
                function changeInviteName(user, id) {
                    document.getElementById("InviteYes").disabled = false;
@@ -35,9 +35,9 @@
            </script>
 <div class="row ">
    
-        @if(Model.Count()!=0)
+        @if(Model.users.Count()!=0)
         {
-            foreach (var item in Model)
+            foreach (var item in Model.users)
             {
                 <div class="col-md-3 col userImgHeight">
                     <a href="@Url.Action( "ReturnUser", new { user = item.Id})">
@@ -52,6 +52,26 @@
                         </a>                        
                     </div>
                 </div>
+            }
+            if (Model.pages > 1) { 
+                @Html.Raw(
+                     "<div class='col-md-12'>"+
+                     "<ul class='pagination'>"+
+                            " <li onclick=\"pagination('1')\">" +
+                            "<a  aria-label='Previous'>"+
+                            "<span aria-hidden='true'>&laquo;</span>" +
+                            "</a>"+
+                      "</li>")
+            for(int i=1;i<= Model.pages;i++){
+                @Html.Raw("<li onclick=\"pagination('"+i+"')\"><a>"+i+"</a></li>")
+
+            }
+             @Html.Raw(
+                               " <li onclick=\"pagination('" +Model.pages + "')\">" +
+                            "<a  aria-label='Previous'>"+
+                            "<span aria-hidden='true'>&raquo;</span>" +
+                            "</a>"+
+                      "</li> </ul></div>")
             }
         }
         else

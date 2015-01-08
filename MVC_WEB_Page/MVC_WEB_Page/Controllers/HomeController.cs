@@ -104,22 +104,90 @@ namespace MVC_WEB_Page.Controllers
             return View();
         }//<-- send invite end
         [Authorize]
-        public ActionResult AllUsers()
-        {            
-            List<ApplicationUser> allUsers = new List<ApplicationUser>();            
-            var context1 = new ApplicationDbContext();
+        public ActionResult AllUsers(int? id)
+        {
+            int idStart = Convert.ToInt32(id);
+            //--> base variables start
+            UsersOutput usersOutput = new UsersOutput();
+            List<ApplicationUser> allUsers = new List<ApplicationUser>();
+            var context = new ApplicationDbContext();
             string current_user = User.Identity.GetUserId();
-            var user = from a in context1.Users where a.Id != current_user select a;
+            var user = from a in context.Users where a.Id != current_user select a;
+            //<-- base variables end
+            //--> pagination variables
+            int userPerPage = 4;
+            int userCount = user.Count();
+            double xs = userCount / userPerPage;
+            int pagecount = Convert.ToInt32(Math.Ceiling(xs));
+            if ((xs % 1) > -0.0001) pagecount += 1;
+            if (id > pagecount) id = (int)pagecount;
+            else if (id < 1 || id == null) id = 1;
+            int startRecord = (Convert.ToInt32(id) - 1) * userPerPage;
+            usersOutput.pages = pagecount;
+            //<-- pagination variables end 
+            //--> select required users start
+            int i = 0;
             foreach (var x in user)
+            {
+                if (i >= startRecord && i < userCount && i < startRecord + userPerPage)
                 {
                     allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
                 }
-                return View(allUsers);
+                i++;
+                if (i == userCount || i == startRecord + userPerPage) break;
+            }
+            //<-- slect required users end
+          
+            usersOutput.users = allUsers;
+            
+                return View(usersOutput);
+           
         }//<-- AllUsers
-
         [Authorize]
-        public PartialViewResult SearchUsers(string SearchName = "")
+        public PartialViewResult AllUsersPart(int? id)
         {
+            int idStart = Convert.ToInt32(id);
+            //--> base variables start
+            UsersOutput usersOutput = new UsersOutput();
+            List<ApplicationUser> allUsers = new List<ApplicationUser>();
+            var context = new ApplicationDbContext();
+            string current_user = User.Identity.GetUserId();
+            var user = from a in context.Users where a.Id != current_user select a;
+            //<-- base variables end
+            //--> pagination variables
+            int userPerPage = 4;
+            int userCount = user.Count();
+            double xs = userCount / userPerPage;
+            int pagecount = Convert.ToInt32(Math.Ceiling(xs));
+            if ((xs % 1) > -0.0001) pagecount += 1;
+            if (id > pagecount) id = (int)pagecount;
+            else if (id < 1 || id == null) id = 1;
+            int startRecord = (Convert.ToInt32(id) - 1) * userPerPage;
+            usersOutput.pages = pagecount;
+            //<-- pagination variables end 
+            //--> select required users start
+            int i = 0;
+            foreach (var x in user)
+            {
+                if (i >= startRecord && i < userCount && i < startRecord + userPerPage)
+                {
+                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name , Surname = x.Surname, Image = x.Image });
+                }
+                i++;
+                if (i == userCount || i == startRecord + userPerPage) break;
+            }
+            //<-- slect required users end
+
+            usersOutput.users = allUsers;
+
+            return PartialView("_DisplayUsers", usersOutput);    
+
+        }//<-- AllUsers partial
+        [Authorize]
+       
+        public PartialViewResult SearchUsers(int? id, string SearchName = "")
+        {
+            UsersOutput usersOutput = new UsersOutput();
             List<ApplicationUser> searchUsers = new List<ApplicationUser>();
             var context1 = new ApplicationDbContext();
             string fname=null;
@@ -138,22 +206,54 @@ namespace MVC_WEB_Page.Controllers
                 }                
 
                 if (sname != null && fname == null)
-                    user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(sname) || a.Surname.StartsWith(sname)) select a;
-                               
+                   // user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(sname) || a.Surname.StartsWith(sname)) select a;
+                    user = from a in context1.Users where a.Id != current_user && (a.Name.Contains(fname) || a.Name.Contains(sname)) select a;            
                 if (sname != null && fname != null)
                     user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(sname) && a.Surname.StartsWith(fname) || a.Name.StartsWith(fname) && a.Surname.StartsWith(sname)) select a;
               
                 if (fname != null && sname==null)
-                    user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(fname) || a.Surname.StartsWith(fname)) select a;
-               
+                    //user = from a in context1.Users where a.Id != current_user && (a.Name.StartsWith(fname) || a.Surname.StartsWith(fname)) select a;
+                    user = from a in context1.Users where a.Id != current_user && (a.Name.Contains(fname) || a.Name.Contains(fname)) select a;  
+
+                int idStart = Convert.ToInt32(id);
+                //--> base variables start
+                var context = new ApplicationDbContext();
+                //<-- base variables end
+                //--> pagination variables
+                int userPerPage = 1;
+                int userCount = user.Count();
+                double xs = userCount / userPerPage;
+                int pagecount = Convert.ToInt32(Math.Ceiling(xs));
+                if ((xs % 1) > -0.0001 && userPerPage!=1) pagecount += 1;
+                if (id > pagecount) id = (int)pagecount;
+                else if (id < 1 || id == null) id = 1;
+                int startRecord = (Convert.ToInt32(id) - 1) * userPerPage;
+                usersOutput.pages = pagecount;
+                //<-- pagination variables end 
+                //--> select required users start
+                int i = 0;
                 foreach (var x in user)
                 {
-                    searchUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
-                }         
+                    if (i >= startRecord && i < userCount && i < startRecord + userPerPage)
+                    {
+                        searchUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name , Surname = x.Surname, Image = x.Image });
+                    }
+                    i++;
+                    if (i == userCount || i == startRecord + userPerPage) break;
+                }
+                //<-- slect required users end
+       
             }
             catch { }
+            //<-- assign found users to user output model
+            usersOutput.users = searchUsers;
+            //--> user output model assignment end
 
-            return PartialView("_DisplayUsers", searchUsers);        
+
+
+
+
+            return PartialView("_DisplayUsers", usersOutput);        
         }//<-- SearchUsers
 
         [Authorize]    

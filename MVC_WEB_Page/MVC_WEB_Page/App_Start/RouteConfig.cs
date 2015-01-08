@@ -47,13 +47,13 @@ namespace MVC_WEB_Page
             //<-- AllUsers
             routes.MapRoute(
                name: "AllUsers",
-               url: "AllUsers",
+               url: "AllUsers/{id}",
                defaults: new { controller = "Home", action = "AllUsers", id = UrlParameter.Optional }
             );
             //<-- interests
             routes.MapRoute(
                name: "Interests",
-               url: "Interests",
+               url: "Interests/{id}",
                defaults: new { controller = "Home", action = "Interests", id = UrlParameter.Optional }
             );
             routes.MapRoute(

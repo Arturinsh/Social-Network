@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_WEB_Page.Models.ApplicationUser>
+﻿@model MVC_WEB_Page.Models.UsersOutput
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
@@ -6,35 +6,98 @@
     Layout = null;
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
-                      <script>
-                      $(document).ready(function () {
-                      $("#Search").addClass("active");
-                      });
-                      </script>  
-
-
+                  
 
 <script type="text/javascript">
-            $(function () {
+    var prevSearch;
+    $(function () {
 
-                $("#form").on("submit", function (e) {
+        $("#form").on("submit", function (e) {
+            prevSearch = $("#person_name").val();
+            e.preventDefault();
+            if (prevSearch == "") {
+                pagination(0);
+            } else {
+                //window.alert(prevSearch);
+                $.ajax({
+                    url: '@Url.Action("SearchUsers", "Home")',
+                    type: "post",
+                    data: {
 
-                    e.preventDefault();
+                        SearchName: $("#person_name").val()
+                    },
+                    success: function (data) {
+                        $("#content").html(data);
+                    }
+                });
+            }//<--else end
+        });
 
-                    $.ajax({
-                        url: '@Url.Action("SearchUsers", "Home")',
+    });
+
+    function pagination(id) {
+        if (prevSearch == "" || typeof prevSearch === 'undefined') {
+            $.ajax({
+                url: '@Url.Action("AllUsersPart", "Home")',
+                type: "post",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $("#content").html(data);
+                }
+            });
+        } else {
+            $.ajax({
+                url: '@Url.Action("SearchUsers", "Home")',
+                       type: "post",
+                       data: {
+
+                           SearchName: $("#person_name").val(),
+                           id:id
+                       },
+                       success: function (data) {
+                           $("#content").html(data);
+                       }
+                   });
+
+               }
+
+
+    }//<-- function end
+
+
+    function inputChanged() {
+        prevSearch = $("#person_name").val();
+       if (prevSearch == "" || typeof prevSearch === 'undefined') {
+                        $.ajax({
+                        url: '@Url.Action("AllUsersPart", "Home")',
                         type: "post",
                         data: {
-                            SearchName: $("#person_name").val()
+                            
                         },
                         success: function (data) {
                                 $("#content").html(data);
                         }
-                    });
-                });
-            });
+                        });
+               } else {
+                   $.ajax({
+                       url: '@Url.Action("SearchUsers", "Home")',
+                       type: "post",
+                       data: {
 
+                           SearchName: $("#person_name").val(),
+                           
+                       },
+                       success: function (data) {
+                           $("#content").html(data);
+                       }
+                   });
+
+               }
+    }
 </script>
+
 
 <div class="row baseMainRow">
    
@@ -47,7 +110,7 @@
             @Html.Label("Search friend")
          </div>
             <div class="col-md-10 col-md-offset-1 friendsSearch">
-                @Html.TextBox("person_name")
+                @Html.TextBox("person_name",null,  new { @class = "form-control",onchange = "inputChanged()"  })
             </div>
         <div class="col-md-4 col-md-offset-5 friendsSearch">
             <input type="submit" value="Search" class="btn btn-primary" />
