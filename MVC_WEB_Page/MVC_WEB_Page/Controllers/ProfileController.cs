@@ -94,8 +94,41 @@ namespace MVC_WEB_Page.Controllers
 
             return RedirectToAction( "ChangePassword","Manage");
         }//<-- change password
-    
-    
+        public ActionResult DeclinedInvitations()
+        {
+
+
+            var context = new ApplicationDbContext();
+            var context1 = new ApplicationDbContext();
+            string match = User.Identity.GetUserId();
+
+            ProfileDeclinedInvations profileDeclinedInvations = new ProfileDeclinedInvations();
+            //--> get logged user info
+            ApplicationUser LoggedInUser = new ApplicationUser();
+            var userLoged = from a in context.Users where a.Id == match select a;
+            foreach (var item in userLoged)
+            {
+                LoggedInUser = new ApplicationUser { Id = item.Id, Name = item.Name, Surname = item.Surname, Image = item.Image };
+                break;
+            }
+            profileDeclinedInvations.LoggedInUser = LoggedInUser;
+            //<-- logged user info end
+            //--> get friend invaitions
+            var friendQuerry = from a in context.Friends where a.IdFriend == match && a.Accepted == -1 select a;
+            foreach (var item in friendQuerry)
+            {
+
+                var quer = (from a in context1.Users where a.Id == item.IdUser select a).Take(1);
+                foreach (var x in quer)
+                    profileDeclinedInvations.Insert(item.Id, item.IdUser, item.date, item.IdFriend, item.Accepted, x.Name + " " + x.Surname, x.Image);
+            }
+
+            //<--get friend invations end
+
+
+
+            return View(profileDeclinedInvations);
+        }//<-- declined invitations end
 
 
     

@@ -256,6 +256,7 @@
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\MsgModelCreate.cs" />
     <Compile Include="Models\MsgModelOutput.cs" />
+    <Compile Include="Models\ProfileDeclinedInvations.cs" />
     <Compile Include="Models\UsersGalleries.cs" />
     <Compile Include="Models\UserView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -509,6 +510,7 @@
     <Content Include="Views\Profile\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_GalleryView.cshtml" />
     <Content Include="Views\Shared\_ImageView.cshtml" />
+    <Content Include="Views\Profile\DeclinedInvitations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

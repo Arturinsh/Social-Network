@@ -92,6 +92,11 @@ namespace MVC_WEB_Page
                defaults: new { controller = "Profile", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+               name: "DeclinedInvitations",
+               url: "DeclinedInvitations",
+               defaults: new { controller = "Profile", action = "DeclinedInvitations", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                name: "ChangePassword",
                url: "ChangePassword",
                defaults: new { controller = "Profile", action = "ChangePassword", id = UrlParameter.Optional }

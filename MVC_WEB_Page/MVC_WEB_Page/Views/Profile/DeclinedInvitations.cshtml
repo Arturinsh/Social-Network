@@ -1,0 +1,140 @@
+﻿@model MVC_WEB_Page.Models.ProfileDeclinedInvations
+@{
+    ViewBag.Title = "Change Password";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+<script>
+
+    function friendsNew(button, user, id, img, inviter) {
+
+        //<-- create label for right button
+        if (button == 1) $("#myModalLabel").text("Accept friend request from " + user);
+        else if (button == 2) $("#myModalLabel").text("Decline friend request from " + user);
+        $("#friendAvailable").text("");
+        document.getElementById("InviteYes").disabled = false;
+        //<-- create image for friend
+        document.getElementById("frienImg").src = "/Content/Images/Profiles/" + img;
+        //accept request
+        if (button == 1) {
+            document.getElementById("InviteYes").onclick = function () {
+                $.post("/InviteValidFriend/acceptFriend", { ID: id },
+                function (data) {
+                    if (data == 0) {
+                        $("#friendAvailable").text("Sucess!");
+
+                        $("#profileFA" + inviter).remove();
+                        $("#profileFB" + inviter).remove();
+                        document.getElementById("InviteYes").disabled = true;
+
+                    } else {
+                        $("#friendAvailable").text("Failure!");
+                        document.getElementById("InviteYes").disabled = true;
+                    }
+
+                });
+
+
+            };//<-- on click invite end
+        }//<-- accept request end
+       
+
+
+        //document.getElementById("InviteYes").disabled = true;
+        //$("#myModalLabel").text("in development");
+        //$("#friendAvailable").text(" n/a        ");
+
+        //$("#friendInviteName").text("Do you want to send friend request to " + user + "?");
+
+
+
+
+
+    }//<-- main function end
+
+
+
+</script>
+
+<div class="row baseMainRow">
+
+
+
+
+
+    <div class="col-md-3 leftBlock">
+
+        <h3>Declined invitations</h3>
+        <hr />
+
+        <div class="btn-group-vertical userUnderImageMenu">
+            <button type="button" onclick="location.href = '/Profile'" class="btn btn-default baseBtn homCenterWell"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-user"></span></div><div class="col-md-9">Profile</div></div></button>
+            <button type="button" onclick="location.href = '/Profile'" class="btn btn-default baseBtn homCenterWell"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-leaf"></span></div><div class="col-md-9">Interests</div></div></button>
+            <button type="button" onclick="location.href = '/DeclinedInvitations'" class="btn btn-default baseBtn homCenterWell active"><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-ban-circle"></span></div><div class="col-md-9">Declined invitations</div></div></button>
+            <button type="button" onclick="location.href = '/ChangePassword'" class="btn btn-default baseBtn homCenterWell "><div class="row"><div class="col-md-1"><span class="glyphicon glyphicon-lock"></span></div><div class="col-md-9">Change password</div></div></button>
+        </div>
+
+
+
+
+    </div><!-- first column end-->
+    <div class="col-md-7 centralBlock">
+        <hr class="hrCentralBlock" />
+
+
+        @foreach (var item in Model.NotAcceptedFriends)
+        {
+
+            <div class="col-md-5 col-md-offset-0" @Html.Raw("id='profileFA" + item.IdUser + "'")>
+                <a href="@Url.Action( "ReturnUser","Home", new { user = item.IdUser})">  @item.UserCredits</a>
+                
+            </div>
+            <div class="col-md-5">
+                @item.date
+            </div>
+            
+            <div class="col-md-2 col-md-offset-0" @Html.Raw("id='profileFB" + item.IdUser + "'")>
+                <a href="#" onclick="friendsNew('1', '@item.UserCredits', '@item.Id', '@item.userImg','@item.IdUser');" data-toggle="modal" data-target="#inviteDialog"><span class="glyphicon glyphicon-ok-circle"></span></a>
+                
+
+            </div>
+        }
+        @if (Model.NotAcceptedFriends.Count == 0)
+        { <span>"Currently you dont have any friendship request"</span> }
+
+
+
+
+
+    </div><!-- second column end-->
+
+
+</div><!--Row end-->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<div class="modal fade" id="inviteDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Friend Invitation</h4>
+            </div>
+
+
+            <div class="modal-body row">
+                <div id="imgFriend" class="col-md-5">
+                    <img id="frienImg" class="img-responsive" />
+                </div>
+                <div class="col-md-7">user info</div>
+
+            </div>
+            <div class="modal-body">
+                <h3 id="friendInviteName"></h3>
+                <h3 id="friendAvailable"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary " id="InviteYes">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
