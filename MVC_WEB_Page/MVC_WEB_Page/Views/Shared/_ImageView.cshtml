@@ -2,10 +2,7 @@
 
 <script>
     $(document).ready(function () {
-            if (window.removeEventListener) {
-                window.removeEventListener('DOMMouseScroll', wheel, false);
-            }
-            window.onmousewheel = document.onmousewheel = document.onkeydown = null;
+        $('body').css('overflow', 'scroll')
     });
     function sendComment(ID) {
         var text = $("#commentText").val();
@@ -19,6 +16,7 @@
             success: function (data) {
                 $("#imageView").html(data);
                 $('html,body').animate({ scrollTop: $("#comments").offset().top }, 500);
+                
             }
         });
     }
