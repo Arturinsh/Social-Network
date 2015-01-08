@@ -10,51 +10,116 @@
     <title>Gallery</title>
     <script>
         $(document).ready(function () {
-            $("#Gallery").addClass("active");
+            $('#checkActive').change(function () {
+                if ($(this).is(":checked")) {
+                    $('#checkText').val("Visible to all");
+                } else {
+                    $('#checkText').val("Visible only to you");
+                }
+            });
         });
-        function deleteImage(ID, name, image) {
-            $("#DeleteYes").show();
-            $("#imageName").text("Do you want to delete " + name + "?");
-            document.getElementById("DeleteYes").onclick = function (e) {
-                e.preventDefault();
+    $(document).on('change', '.btn-file :file', function () {
+        var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+    });
+    $(document).ready(function () {
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+        });
+    });
+    $(document).ready(function () {
+        $("#Gallery").addClass("active");
+    });
+    function deleteImage(ID, name, image) {
+        $("#DeleteYes").show();
+        $("#imageName").text("Do you want to delete " + name + "?");
+        document.getElementById("DeleteYes").onclick = function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.Action("deleteImage", "Gallery")',
+                type: "post",
+                data: {
+                    id: ID
+                },
+                success: function (data) {
+                    $("#galleryView").html(data);
+                    $("#DeleteYes").hide();
+                    $("#imageView").hide();
+                    $("#imageName").text("Image " + name + " deleted!");
+                }
+            });
+        };
+    }
+        function showImage(ID) {
                 $.ajax({
-                    url: '@Url.Action("deleteImage", "Gallery")',
+                    url: '@Url.Action("returnImage", "Gallery")',
+                    type: "post",
+                    data: {
+                        id: ID
+                    },
+                    success: function (data) {
+                        $("#imageView").show();
+                        $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 500);
+                        $("#imageView").html(data);
+                    }
+                });
+        }
+            function uploadImage() {
+                $('form#uploadForm').submit();
+            }
+            function imageActivation(ID) {
+                $.ajax({
+                    url: '@Url.Action("activeImage", "Gallery")',
                     type: "post",
                     data: {
                         id: ID
                     },
                     success: function (data) {
                         $("#galleryView").html(data);
-                        $("#DeleteYes").hide();
-                        $("#imageView").hide();
-                        $("#imageName").text("Image " + name + " deleted!");
                     }
                 });
-            };
-        }
- 
-        function showImage(ID)
-        {
-            $.ajax({
-                url: '@Url.Action("returnImage", "Gallery")',
-                type: "post",
-                data: {
-                    id: ID
-                },
-                success: function (data) {
-                    $("#imageView").show();
-                    $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 500);
-                    $("#imageView").html(data);
-                }
-            });
-        }
+            }
+        function imageEdit(ID) {
+                $("#editImg").show();
+                $("#nameEdit").show();
+                $("#editImgMsg").text("");
+                $("#editImgName").val("");
+                document.getElementById("editImg").onclick = function (e) {
+                    e.preventDefault();
+                    var Name = $("#editImgName").val().toString();
+                    $.ajax({
+                        url: '@Url.Action("editImage", "Gallery")',
+                        type: "post",
+                        data: {
+                            id: ID,
+                            name: Name
+                        },
+                        success: function (data) {
+                            $("#editImg").hide();
+                            $("#nameEdit").hide();
+                             $("#editImgMsg").text("Image name changed!");
+                            $("#galleryView").html(data);
+                        }
+                    });
+                };
+            }
         
-    </script>
+</script>
 </head>
 <body>
     <div class="row baseMainRow">
         <div class="col-md-2 leftBlock">
-            <button onclick="location.href='/AddGallery'" type="button" class="btn btn-default baseBtn active"><span class="glyphicon glyphicon-plus"></span>Add Image</button>
+            <button type="button" class="btn btn-default baseBtn active" data-toggle="modal" data-target="#uploadDialog"><span class="glyphicon glyphicon-plus"></span>Add Image</button>
         </div><!-- third column end-->
         <hr class="hrCentralBlock" />
         <!-- first column end-->
@@ -76,12 +141,70 @@
                     <h4 class="modal-title text-danger" id="myModalLabel">Delete</h4>
                 </div>
                 <div class="modal-body">
-                    <img id="imageSrc" />
                     <h3 id="imageName" class="text-danger"></h3>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary " id="DeleteYes">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="uploadDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Upload</h4>
+                </div>
+                <div class="modal-body">
+            @using (Html.BeginForm("UploadImage", "Gallery", FormMethod.Post, new {  @id="uploadForm", role = "form", enctype = "multipart/form-data" }))
+            {
+                    <div class="form-group">
+                        <label class="sr-only" for="name">Name</label>
+                        <input type="text" class="form-control" id="imgName" name="name"
+                               placeholder="Enter Name">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                Browse… <input type="file" id="imgFile" name="picture">
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" readonly="">
+                    </div>
+                <br />
+                    <div class="input-group">
+                       <span class="input-group-addon">
+                          <input id="checkActive" type="checkbox" name="imgActive" value="true" checked="checked">
+                           <input value="false" type="hidden" name="imgActive" />
+                       </span>
+                        <input id="checkText" type="text" class="form-control" readonly="" value="Visible to all">
+                    </div>
+            }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-" id="uploadYes" onclick="uploadImage();">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Name</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" id="nameEdit">
+                        <input type="text" class="form-control" id="editImgName" name="name"
+                               placeholder="Enter Name" value="Cat">
+                    </div>
+                    <h3 id="editImgMsg"></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="editImg">Edit</button>
                 </div>
             </div>
         </div>

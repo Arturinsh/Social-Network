@@ -204,6 +204,7 @@ namespace MVC_WEB_Page.Controllers
             }
             return PartialView("_GalleryView", images);
         }
+        [Authorize]
         public PartialViewResult returnImage(int id)
         {
             var context = new ApplicationDbContext();
@@ -213,6 +214,7 @@ namespace MVC_WEB_Page.Controllers
             image.Add(new ImageView() { image = usersgallery,comments=cmm});
             return PartialView("_ImageView", image);
         }
+        [Authorize]
         public PartialViewResult addComment(int id, string commentText)
         {
             var context = new ApplicationDbContext();
@@ -227,6 +229,120 @@ namespace MVC_WEB_Page.Controllers
             List<ImageView> image = new List<ImageView>();
             var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
             image.Add(new ImageView() { image = usersgallery, comments = cmm });
+            return PartialView("_ImageView", image);
+        }
+        [HttpPost]
+        [Authorize]
+        public ActionResult uploadImage(String name, HttpPostedFileBase picture, bool imgActive)
+        {
+            var currentUsersID = User.Identity.GetUserId();
+            var currentUsersName = User.Identity.Name;
+            var image = new UsersGalleries
+            {
+                UserId = currentUsersID,
+                Active = imgActive,
+            };
+            if (picture != null && image.UserId != null)
+            {
+                image.Image = currentUsersName + DateTime.Now.Day + "-"
+                       + DateTime.Now.Month + "-" + DateTime.Now.Year + picture.FileName;
+                if (name!=null)
+                    image.Name = name;
+                else name = "";
+                if (picture != null)
+                {
+                    var fileName = Path.GetFileName(picture.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/Images/" + currentUsersName + "/"), image.Image);
+                    if (Directory.Exists(path))
+                    {
+                        picture.SaveAs(path);
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/Content/Images/" + currentUsersName + "/"));
+                        picture.SaveAs(path);
+                    }
+
+                }
+                db.Galleries.Add(image);
+                db.SaveChanges();
+            }
+            var gallery = from c in db.Galleries
+                          where c.UserId == currentUsersID
+                          select c;
+            List<UsersGalleries> imgs = gallery.ToList();
+            List<ImageView> images = new List<ImageView>();
+            foreach (var x in imgs)
+            {
+                var cmm = db.Comments.Where(d => d.IdImage == x.Id).ToList();
+                images.Add(new ImageView() { image = x, comments = cmm });
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [Authorize]
+        public PartialViewResult activeImage(int id)
+        {
+            var context = new ApplicationDbContext();
+            UsersGalleries usersgallery = context.Galleries.Find(id);
+            if (usersgallery.Active)
+                usersgallery.Active = false;
+            else
+                usersgallery.Active = true;
+            context.Entry(usersgallery).State = EntityState.Modified;
+            context.SaveChanges();
+            var currentUsersID = User.Identity.GetUserId();
+            var gallery = from c in db.Galleries
+                          where c.UserId == currentUsersID
+                          select c;
+            List<UsersGalleries> imgs = gallery.ToList();
+            List<ImageView> images = new List<ImageView>();
+            foreach (var x in imgs)
+            {
+                var cmm = db.Comments.Where(d => d.IdImage == x.Id).ToList();
+                images.Add(new ImageView() { image = x, comments = cmm });
+            }
+            return PartialView("_GalleryView", images);
+        }
+        [HttpPost]
+        [Authorize]
+        public PartialViewResult editImage(int id,string name)
+        {
+            var context = new ApplicationDbContext();
+            UsersGalleries usersgallery = context.Galleries.Find(id);
+            usersgallery.Name = name;
+            context.Entry(usersgallery).State = EntityState.Modified;
+            context.SaveChanges();
+            var currentUsersID = User.Identity.GetUserId();
+            var gallery = from c in db.Galleries
+                          where c.UserId == currentUsersID
+                          select c;
+            List<UsersGalleries> imgs = gallery.ToList();
+            List<ImageView> images = new List<ImageView>();
+            foreach (var x in imgs)
+            {
+                var cmm = db.Comments.Where(d => d.IdImage == x.Id).ToList();
+                images.Add(new ImageView() { image = x, comments = cmm });
+            }
+            return PartialView("_GalleryView", images);
+        }
+        public PartialViewResult nextImage(int id,string UserName)
+        {
+            var context = new ApplicationDbContext();
+            string userName=context.Users.Where(d => d.UserName == UserName).ToList().First().Id;
+            UsersGalleries nextImg = new UsersGalleries();
+            List<UsersGalleries> gal = context.Galleries.Where(d => d.UserId == userName).ToList();
+            int ListStatus =0;
+            int currentId = gal.FindIndex(d =>d.Id==id);
+            if (currentId + 1 < gal.Count)
+                nextImg = gal[currentId + 1];
+            else
+                nextImg = gal[currentId];
+            if (currentId + 2 > gal.Count)
+                ListStatus = 1;
+            List<ImageView> image = new List<ImageView>();
+            var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
+            image.Add(new ImageView() { image = nextImg, comments = cmm, listStatus=ListStatus });
             return PartialView("_ImageView", image);
         }
         protected override void Dispose(bool disposing)

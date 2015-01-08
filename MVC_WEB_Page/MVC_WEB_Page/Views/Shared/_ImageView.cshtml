@@ -20,6 +20,29 @@
             }
         });
     }
+    function nextImg(ID,User) {
+        var text = $("#commentText").val();
+        $.ajax({
+            url: '@Url.Action("nextImage", "Gallery")',
+            type: "post",
+            data: {
+                id: ID,
+                UserName: User
+            },
+            success: function (data) {
+                $("#imageView").html(data);
+                $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 500);
+            }
+        });
+    }
+    function backToTop()
+    {
+        $("html, body").animate({ scrollTop: 0 }, 500);
+    }
+    function backToImage()
+    {
+        $('html,body').animate({ scrollTop: $("#bigImage").offset().top }, 500);
+    }
 </script>
 <hr class="hrCentralBlock" />
 @if (Model.Count() > 0)
@@ -31,13 +54,25 @@
     </div>
     <div class="col-md-2 rightBlock" >
     </div>
-   
-}
-<hr class="hrCentralBlock" />
+
+
+<div class="col-md-12 centralBlock">
+    <div class="col-md-2 leftBlock">
+    </div>
+    <div class="col-md-8 btn-group">
+        <button class="btn btn-default col-md-3"  id="prevImg">Prev</button>
+        <button class="btn btn-default col-md-6 " data-toggle="modal" data-target="#CommentDialog" id="comments">Add Comment</button>
+        <button class="btn btn-default col-md-3"  id="nextImg" onclick="nextImg('@Model.First().image.Id','@User.Identity.Name');">Next</button>
+    </div>
+    <div class="col-md-2 righttBlock">
+        <button class="btn btn-default col-md-12" onclick="backToTop();">Back to Top</button>
+    </div>
+</div>
 <div class="col-md-3 leftBlock">
 </div>
 <div class="col-md-6 centralBlock">
     <div class="list-group" >
+        
         @foreach (var item in Model.First().comments)
         {
             <div class="list-group-item">
@@ -48,19 +83,30 @@
                 <p class="list-group-item-text">@item.Content</p>
             </div>
         }
+        @if (Model.First().comments.Count == 0)
+        { 
+        <h4 class="text-center">Nobody commented this image yet</h4>
+        }
 </div>
 </div>
 <div class="col-md-3 righttBlock">
+</div>
+   
+<div class="col-md-12 centralBlock">
+@if (Model.First().comments.Count > 0) {
+    <div class="col-md-2 leftBlock">
+    </div>
+    <div class="col-md-8 btn-group">
+        <button class="btn btn-default col-md-3" id="prevImg">Prev</button>
+        <button class="btn btn-default col-md-6 " data-toggle="modal" data-target="#CommentDialog" id="comments">Add Comment</button>
+        <button class="btn btn-default col-md-3" id="nextImg">Next</button>
+    </div>
+    <div class="col-md-2 righttBlock">
+        <button class="btn btn-default col-md-12" onclick="backToImage()">Back to image</button>
+    </div>
+}
+</div>
     
-</div>
-
-<div class="col-md-4 leftBlock">
-</div>
-<div class="col-md-4">
-    <button class="btn btn-default col-md-12" data-toggle="modal" data-target="#CommentDialog" id="comments">Add Comment</button>
-</div>
-<div class="col-md-4 righttBlock">
-</div>
 <div class="modal fade" id="CommentDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -77,5 +123,4 @@
         </div>
     </div>
 </div>
-
-<p>Scrolled <span>0</span> times.</p>
+}

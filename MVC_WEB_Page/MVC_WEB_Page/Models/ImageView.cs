@@ -9,5 +9,6 @@ namespace MVC_WEB_Page.Models
     {
         public List<Comments> comments { get; set; }
         public UsersGalleries image { get; set; }
+        public int listStatus { get; set; }
     }
 }
