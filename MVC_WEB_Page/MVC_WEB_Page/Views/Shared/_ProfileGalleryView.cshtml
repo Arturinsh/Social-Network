@@ -1,0 +1,21 @@
+﻿@model MVC_WEB_Page.Models.UserView
+
+<div class="row ">
+    @foreach (var item in Model.gallery)
+    {
+        <div class="col-md-3 gallleryImgHeight thumbnail">
+            <div class="col-md-12 text-center" onclick="showImage(@item.image.Id,'@Model.user.UserName');">
+                <h4>@item.image.Name</h4>
+            </div>
+            <div class="col-md-12 ">
+                <a class="galleryA">
+                    <img src="~/Content/Images/@Model.user.UserName/@item.image.Image" onclick="showImage(@item.image.Id,'@Model.user.UserName');" class="galleryImg" />
+                </a>
+            </div>
+        </div>
+    }
+    @if (Model.gallery.Count() == 0)
+    {
+        <h3 class="text-center">@Model.user.Name don't have any image uploaded yet</h3>
+    }
+</div>

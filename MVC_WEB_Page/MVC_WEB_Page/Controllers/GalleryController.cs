@@ -210,7 +210,15 @@ namespace MVC_WEB_Page.Controllers
             var context = new ApplicationDbContext();
             UsersGalleries usersgallery = context.Galleries.Find(id);
             string userName = context.Users.Where(d => d.UserName == UserName).ToList().First().Id;
-            List<UsersGalleries> gal = context.Galleries.Where(d => d.UserId == userName).ToList();
+            List<UsersGalleries> gal = new List<UsersGalleries>();
+            if (userName == User.Identity.GetUserId())
+            {
+                gal = context.Galleries.Where(d => d.UserId == userName).ToList();
+            }
+            else
+            {
+                gal = context.Galleries.Where(d => d.UserId == userName && d.Active).ToList();
+            }
             int ListStatus = 0;
             int currentId = gal.FindIndex(d => d.Id == id);
             if (currentId - 1 < 0 && currentId + 2 > gal.Count)
@@ -224,10 +232,16 @@ namespace MVC_WEB_Page.Controllers
             List<ImageView> image = new List<ImageView>();
             var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
             image.Add(new ImageView() { image = usersgallery,comments=cmm,listStatus=ListStatus});
-            return PartialView("_ImageView", image);
+            if (userName == User.Identity.GetUserId())
+            {
+                return PartialView("_ImageView", image);
+            }
+            else
+                return PartialView("_ProfileGImageView", new UserView() { gallery = image, user = context.Users.Where(d => d.UserName == UserName).ToList().First() });
         }
+        
         [Authorize]
-        public PartialViewResult addComment(int id, string commentText)
+        public PartialViewResult addComment(int id, string commentText,int view)
         {
             var context = new ApplicationDbContext();
             Comments comment = new Comments() 
@@ -241,7 +255,13 @@ namespace MVC_WEB_Page.Controllers
             List<ImageView> image = new List<ImageView>();
             var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
             image.Add(new ImageView() { image = usersgallery, comments = cmm });
-            return PartialView("_ImageView", image);
+            if (view == 0)
+                return PartialView("_ImageView", image);
+            else
+            {
+                string userId = context.Galleries.Where(d => d.Id == id).ToList().First().UserId;
+                return PartialView("_ProfileGImageView", new UserView() { gallery = image, user = context.Users.Where(d => userId == d.Id).ToList().First() });
+            }
         }
         [HttpPost]
         [Authorize]
@@ -342,8 +362,17 @@ namespace MVC_WEB_Page.Controllers
         {
             var context = new ApplicationDbContext();
             string userName=context.Users.Where(d => d.UserName == UserName).ToList().First().Id;
+            
             UsersGalleries nextImg = new UsersGalleries();
-            List<UsersGalleries> gal = context.Galleries.Where(d => d.UserId == userName).ToList();
+            List<UsersGalleries> gal = new List<UsersGalleries>();
+            if (userName == User.Identity.GetUserId())
+            {
+                gal = context.Galleries.Where(d => d.UserId == userName).ToList();
+            }
+            else
+            {
+                gal = context.Galleries.Where(d => d.UserId == userName && d.Active).ToList();
+            }
             int ListStatus =0;
             int currentId = gal.FindIndex(d =>d.Id==id);
             if (currentId + 1 < gal.Count)
@@ -355,14 +384,27 @@ namespace MVC_WEB_Page.Controllers
             List<ImageView> image = new List<ImageView>();
             var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
             image.Add(new ImageView() { image = nextImg, comments = cmm, listStatus=ListStatus });
-            return PartialView("_ImageView", image);
+            if (userName == User.Identity.GetUserId())
+            {
+                return PartialView("_ImageView", image);
+            }
+            else
+                return PartialView("_ProfileGImageView", new UserView() { gallery = image, user = context.Users.Where(d => d.UserName == UserName).ToList().First() });
         }
         public PartialViewResult prevImage(int id, string UserName)
         {
             var context = new ApplicationDbContext();
             string userName = context.Users.Where(d => d.UserName == UserName).ToList().First().Id;
             UsersGalleries nextImg = new UsersGalleries();
-            List<UsersGalleries> gal = context.Galleries.Where(d => d.UserId == userName).ToList();
+            List<UsersGalleries> gal = new List<UsersGalleries>();
+            if (userName == User.Identity.GetUserId())
+            {
+                gal = context.Galleries.Where(d => d.UserId == userName).ToList();
+            }
+            else
+            {
+                gal = context.Galleries.Where(d => d.UserId == userName && d.Active).ToList();
+            }
             int ListStatus = 0;
             int currentId = gal.FindIndex(d => d.Id == id);
             if (currentId > 0)
@@ -374,8 +416,14 @@ namespace MVC_WEB_Page.Controllers
             List<ImageView> image = new List<ImageView>();
             var cmm = db.Comments.Where(d => d.IdImage == id).ToList();
             image.Add(new ImageView() { image = nextImg, comments = cmm, listStatus = ListStatus });
-            return PartialView("_ImageView", image);
+            if (userName == User.Identity.GetUserId())
+            {
+                return PartialView("_ImageView", image);
+            }
+            else
+                return PartialView("_ProfileGImageView", new UserView() { gallery = image, user = context.Users.Where(d => d.UserName == UserName).ToList().First() });
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

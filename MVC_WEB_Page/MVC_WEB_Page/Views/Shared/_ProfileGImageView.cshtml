@@ -1,0 +1,140 @@
+﻿@model MVC_WEB_Page.Models.UserView
+<script>
+    $(document).ready(function () {
+        $('body').css('overflow', 'scroll')
+    });
+    function sendComment(ID) {
+        var text = $("#commentText").val();
+        $.ajax({
+            url: '@Url.Action("addComment", "Gallery")',
+            type: "post",
+            data: {
+                id: ID,
+                commentText: text,
+                view: 1 
+            },
+            success: function (data) {
+                $("#imageView").html(data);
+                $('#galleryBody').animate({ scrollTop: $("#comments").offset().top }, 500);
+            }
+        });
+    }
+    function nextImg(ID,User) {
+        var text = $("#commentText").val();
+        $.ajax({
+            url: '@Url.Action("nextImage", "Gallery")',
+            type: "post",
+            data: {
+                id: ID,
+                UserName: User
+            },
+            success: function (data) {
+                $("#imageView").html(data);
+                $('#galleryBody').animate({ scrollTop: $("#comments").offset().top }, 1);
+            }
+        });
+    }
+    function prevImg(ID, User) {
+        var text = $("#commentText").val();
+        $.ajax({
+            url: '@Url.Action("prevImage", "Gallery")',
+            type: "post",
+            data: {
+                id: ID,
+                UserName: User
+            },
+            success: function (data) {
+                $("#imageView").html(data);
+                $('#galleryBody').animate({ scrollTop: $("#comments").offset().top }, 1);
+            }
+        });
+    }
+    function backToTop()
+    {
+        $("#galleryBody").animate({ scrollTop: 0 }, 500);
+    }
+</script>
+<hr class="hrCentralBlock" />
+@if (Model.gallery.Count() > 0)
+{
+    string next = "", prev = "";
+    if (Model.gallery.First().listStatus == 1)
+    {
+        next = "disabled";
+    }
+
+    if (Model.gallery.First().listStatus == -1)
+    {
+        prev = "disabled";
+    }
+    if (Model.gallery.First().listStatus == 2)
+    {
+        prev = "disabled";
+        next = "disabled";
+    }
+
+    <h3 class="text-center" id="bigImage">@Model.gallery.First().image.Name</h3>
+    <div class="col-md-1 leftBlock">
+    </div>
+    <div class="col-md-10">
+        <a href="~/Content/Images/@Model.user.UserName/@Model.gallery.First().image.Image" target="_blank">
+            <img src="~/Content/Images/@Model.user.UserName/@Model.gallery.First().image.Image" class="img-responsive galleryBigImage" />
+        </a>
+    </div>
+    <div class="col-md-1 rightBlock">
+    </div>
+
+
+    <div class="col-md-12 centralBlock">
+        <div class="col-md-1 leftBlock">
+        </div>
+        <div class="col-md-8 btn-group">
+            <button class="btn btn-default col-md-3" id="prevImg" onclick="prevImg('@Model.gallery.First().image.Id','@Model.user.UserName');" @prev>Prev</button>
+            <button class="btn btn-default col-md-6 " data-toggle="modal" data-target="#CommentDialog" id="comments">Add Comment</button>
+
+            <button class="btn btn-default col-md-3" id="nextImg" onclick="nextImg('@Model.gallery.First().image.Id','@Model.user.UserName');" @next>Next</button>
+        </div>
+        <div class="col-md-3 righttBlock">
+            <button class="btn btn-default col-md-12" onclick="backToTop();">Back to Top</button>
+        </div>
+    </div>
+    <div class="col-md-1 leftBlock">
+    </div>
+    <div class="col-md-10 centralBlock">
+        <div class="list-group" id="comments" style="overflow-y: scroll; height:15vh;">
+
+            @foreach (var item in Model.gallery.First().comments)
+            {
+                <div class="list-group-item ">
+                    <a href="@Url.Action( "ReturnUser","Home", new { user = item.IdUser})">
+                        <h4 class="list-group-item-heading" id="commenId">@item.SenderName</h4>
+                    </a>
+                    <h5 class="list-group-item-heading">@item.date</h5>
+                    <p class="list-group-item-text">@item.Content</p>
+                </div>
+            }
+            @if (Model.gallery.First().comments.Count == 0)
+            {
+                <h4 class="text-center">Nobody commented this image yet</h4>
+            }
+        </div>
+    </div>
+    <div class="col-md-1 righttBlock">
+    </div>
+    <div class="modal fade" id="CommentDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Comment</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="commentText" rows="3" class="form-control center-block"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="sendComment('@Model.gallery.First().image.Id');">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
