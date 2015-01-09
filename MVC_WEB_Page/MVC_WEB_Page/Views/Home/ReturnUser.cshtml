@@ -1,9 +1,27 @@
-﻿﻿﻿@model MVC_WEB_Page.Models.UserView
+﻿﻿﻿﻿@model MVC_WEB_Page.Models.UserView
 
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
+<script>
+    function showImage(ID, User) {
+        $.ajax({
+            url: '@Url.Action("returnImage", "Gallery")',
+            type: "post",
+            data: {
+                id: ID,
+                UserName: User
+            },
+            success: function (data) {
+                $("#imageView").show();
+                $('#galleryBody').animate({ scrollTop: $("#bigImage").offset().top
+                }, 500);
+                $("#imageView").html(data);
+            }
+        });
+    }
+</script>
 <html>
 <head>
     <title>@Model.user.Name  @Model.user.Surname</title>
@@ -15,19 +33,16 @@
             <h1 class=" text-center">@Model.user.Name @Model.user.Surname</h1>
             <img src="~/Content/Images/Profiles/@Model.user.Image" class="img-responsive userImage" />
         </div>
+
         <div class="col-md-7 centralBlock">
             <h3 class="text-center">Gallery</h3>
-            <div class="row">
-                @if (Model.gallery.Count == 0)
-                { <h2 class="text-center">User has no images to show in gallery</h2>}
-                @foreach (var item in Model.gallery)
-                {
-                    <div class="col-md-4">
-                        <a href="~/Content/Images/@Model.user.UserName/@item.Image" data-lightbox="galery" data-title=@item.Name>
-                            <img src="~/Content/Images/@Model.user.UserName/@item.Image" class="img-responsive" />
-                        </a>
-                    </div>
-                }
+            <div class="col-md-12" id="galleryBody" style="overflow-y: scroll; height:75vh;">
+                <div class=" col-md-12" id="galleryView">
+                    @Html.Partial("_ProfileGalleryView", Model)
+                </div>
+                <div class="col-md-12" id="imageView" hidden="hidden">
+                    @Html.Partial("_ProfileGImageView", Model)
+                </div>
             </div>
         </div>
         <div class="col-md-2 leftBlock">

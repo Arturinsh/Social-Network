@@ -1,20 +1,29 @@
-﻿@model IEnumerable<MVC_WEB_Page.Models.ImageView>
+﻿﻿@model IEnumerable<MVC_WEB_Page.Models.ImageView>
 
 <div class="row ">
     @foreach (var item in Model)
     {
-        <div class="col-md-3 gallleryImgHeight thumbnail" onclick="showImage(@item.image.Id);">
+        string style = item.image.Active ? "background-color: white" : "background-color:#D3D3D3";
+        <div class="col-md-3 gallleryImgHeight thumbnail" style="@style">
+            <div class="col-md-12 text-center" onclick="showImage(@item.image.Id,'@User.Identity.Name');">
+                <h4>@item.image.Name</h4>
+            </div>
             <div class="col-md-12 ">
-                <a  class="galleryA">
-                    <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.image.Image" class="galleryImg" />
+                <a class="galleryA">
+                    <img src="~/Content/Images/@User.Identity.Name.ToString()/@item.image.Image" onclick="showImage(@item.image.Id,'@User.Identity.Name');" class="galleryImg" />
                 </a>
             </div>
-            <div class="col-md-12 text-center" onclick="showImage(@item.image.Id);">
-                <a>@item.image.Name</a>
-            </div>
-            <div class="col-md-12">
-                <a href="#" onclick="deleteImage('@item.image.Id','@item.image.Name','@item.image.Image');" data-toggle="modal" data-target="#deleteDialog"><span class="glyphicon glyphicon-remove"></span>Delete</a>
+
+            <div class="col-md-12 text-center">
+                @{string hide = item.image.Active ? "glyphicon glyphicon-eye-open" : "glyphicon glyphicon-eye-close";}
+                <a href="#" onclick="imageActivation('@item.image.Id');"><span class="@hide"></span></a>
+                <a href="#" onclick="imageEdit('@item.image.Id');" data-toggle="modal" data-target="#editDialog"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="#" onclick="deleteImage('@item.image.Id','@item.image.Name','@item.image.Image');" data-toggle="modal" data-target="#deleteDialog"><span class="glyphicon glyphicon-trash"></span></a>
             </div>
         </div>
+    }
+    @if (Model.Count() == 0)
+    {
+        <h3 class="text-center">You don't have any image uploaded yet</h3>
     }
 </div>

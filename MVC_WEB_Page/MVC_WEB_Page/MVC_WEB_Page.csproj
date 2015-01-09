@@ -514,6 +514,8 @@
     <Content Include="Views\Shared\_GalleryView.cshtml" />
     <Content Include="Views\Shared\_ImageView.cshtml" />
     <Content Include="Views\Profile\DeclinedInvitations.cshtml" />
+    <Content Include="Views\Shared\_ProfileGalleryView.cshtml" />
+    <Content Include="Views\Shared\_ProfileGImageView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

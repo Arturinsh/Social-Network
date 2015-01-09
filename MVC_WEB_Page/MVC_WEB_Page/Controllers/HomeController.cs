@@ -86,16 +86,24 @@ namespace MVC_WEB_Page.Controllers
                 var context = new ApplicationDbContext();
                 var users = from a in context.Users where a.Id == user select a;
                 var gallery = from a in context.Galleries where a.UserId == user && a.Active select a;
-                userview.friends = false;
-
-                userview.gallery = gallery.ToList();
+                List<ImageView> images = new List<ImageView>();
+                List<UsersGalleries> gal = gallery.ToList();
+                foreach (var x in gal)
+                {
+                    var cmm = context.Comments.Where(d => d.IdImage == x.Id).ToList();
+                    images.Add(new ImageView() { image = x, comments = cmm });
+                }
+                userview.gallery = images;
                 userview.user = users.ToList().First();
             }
             catch
             {
                 return HttpNotFound();
             }
-            return View(userview);
+            if (user == User.Identity.GetUserId())
+                return RedirectToAction("Index");
+            else
+                return View(userview);
         }
         public ActionResult sendInvite(string ID)
         {
