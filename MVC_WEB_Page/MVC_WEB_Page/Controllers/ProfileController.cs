@@ -15,7 +15,7 @@ namespace MVC_WEB_Page.Controllers
     {
         //
         // GET: /Profile/
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             var context = new ApplicationDbContext();
             string match = User.Identity.GetUserId();
@@ -28,16 +28,18 @@ namespace MVC_WEB_Page.Controllers
                 applicationUser.BirthDate = item.BirthDate;
                 applicationUser.Gender = item.Gender;
                 applicationUser.ImageoOld = item.Image;
+                
 
             }
-
+           
+            if(id==1)
+            ViewBag.Msg = "Incorrect date must be older than 12yrs";
 
 
             return View(applicationUser);
         }//<-- index view end
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public ActionResult changeAcoountInfo(EditUserViewmodel model)
         //public ActionResult Create([Bind(Include = "Id,IdAuthor,IdReceiver,Title,Content,Date")] Messages messages)
         {
@@ -62,7 +64,7 @@ namespace MVC_WEB_Page.Controllers
                 context.SaveChanges();
                 return RedirectToAction("Index", "Profile");
             }
-            return RedirectToAction("ChangePassword", "Manage");
+            return RedirectToAction("Index", "Profile", new { id = 1 });
         }//<-- index post end
         public ActionResult changeAcoountImage(EditUserViewmodel model)
         //public ActionResult Create([Bind(Include = "Id,IdAuthor,IdReceiver,Title,Content,Date")] Messages messages)

@@ -40,9 +40,9 @@ namespace MVC_WEB_Page
             );
             //<-- friends
             routes.MapRoute(
-               name: "AllFriends",
-               url: "AllFriends",
-               defaults: new { controller = "Home", action = "AllFriends", id = UrlParameter.Optional }
+               name: "Friends",
+               url: "Friends/{id}",
+               defaults: new { controller = "Home", action = "AllUsers", id = UrlParameter.Optional }
             );
             //<-- AllUsers
             routes.MapRoute(

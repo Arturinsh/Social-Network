@@ -157,7 +157,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anotations\DateValidator.cs" />
     <Compile Include="Anotations\GenderValidator.cs" />
+    <Compile Include="Anotations\image.cs" />
     <Compile Include="Anotations\MsgValidReceiver.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

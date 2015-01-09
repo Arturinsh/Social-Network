@@ -37,7 +37,6 @@
     </div><!-- first column end-->
     <div class="col-md-7 centralBlock">
         <hr class="hrCentralBlock" />
-       
         @using (Html.BeginForm("changeAcoountImage", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
@@ -105,6 +104,7 @@
                           </div>
                           <div class="col-md-10 col-md-offset-1">
                               @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control datepicker" })
+                              @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
                           </div>
                       </div>
                 

@@ -112,14 +112,15 @@ namespace MVC_WEB_Page.Controllers
             List<ApplicationUser> allUsers = new List<ApplicationUser>();
             var context = new ApplicationDbContext();
             string current_user = User.Identity.GetUserId();
-            var user = from a in context.Users where a.Id != current_user select a;
+            //var user = from a in context.Users where a.Id != current_user select a;
+            var user = from a in context.Friends where (a.IdUser == current_user && a.IdFriend != current_user && a.Accepted==1) || (a.IdUser != current_user && a.IdFriend == current_user && a.Accepted==1) select a; 
             //<-- base variables end
             //--> pagination variables
             int userPerPage = 4;
             int userCount = user.Count();
             double xs = userCount / userPerPage;
             int pagecount = Convert.ToInt32(Math.Ceiling(xs));
-            if ((xs % 1) > -0.0001) pagecount += 1;
+            if ((xs % 1) > -0.00001) pagecount += 1;
             if (id > pagecount) id = (int)pagecount;
             else if (id < 1 || id == null) id = 1;
             int startRecord = (Convert.ToInt32(id) - 1) * userPerPage;
@@ -131,7 +132,14 @@ namespace MVC_WEB_Page.Controllers
             {
                 if (i >= startRecord && i < userCount && i < startRecord + userPerPage)
                 {
-                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name, Surname = x.Surname, Image = x.Image });
+                    var context1 = new ApplicationDbContext();
+                    var assignUser = (from a in context1.Users  select a).Take(0);
+                    if(x.IdUser!= current_user)
+                    assignUser = from a in context1.Users where a.Id == x.IdUser select a;
+                    if (x.IdFriend != current_user)
+                    assignUser = from a in context1.Users where a.Id == x.IdFriend select a;
+                    foreach(var item in assignUser)
+                        allUsers.Add(new ApplicationUser { Id = item.Id, Name = item.Name, Surname = item.Surname, Image = item.Image });
                 }
                 i++;
                 if (i == userCount || i == startRecord + userPerPage) break;
@@ -152,14 +160,14 @@ namespace MVC_WEB_Page.Controllers
             List<ApplicationUser> allUsers = new List<ApplicationUser>();
             var context = new ApplicationDbContext();
             string current_user = User.Identity.GetUserId();
-            var user = from a in context.Users where a.Id != current_user select a;
+            var user = from a in context.Friends where (a.IdUser == current_user && a.IdFriend != current_user && a.Accepted == 1) || (a.IdUser != current_user && a.IdFriend == current_user && a.Accepted == 1) select a; 
             //<-- base variables end
             //--> pagination variables
             int userPerPage = 4;
             int userCount = user.Count();
             double xs = userCount / userPerPage;
             int pagecount = Convert.ToInt32(Math.Ceiling(xs));
-            if ((xs % 1) > -0.0001) pagecount += 1;
+            if ((xs % 1) > -0.00001) pagecount += 1;
             if (id > pagecount) id = (int)pagecount;
             else if (id < 1 || id == null) id = 1;
             int startRecord = (Convert.ToInt32(id) - 1) * userPerPage;
@@ -171,7 +179,14 @@ namespace MVC_WEB_Page.Controllers
             {
                 if (i >= startRecord && i < userCount && i < startRecord + userPerPage)
                 {
-                    allUsers.Add(new ApplicationUser { Id = x.Id, Name = x.Name , Surname = x.Surname, Image = x.Image });
+                    var context1 = new ApplicationDbContext();
+                    var assignUser = (from a in context1.Users select a).Take(0);
+                    if (x.IdUser != current_user)
+                        assignUser = from a in context1.Users where a.Id == x.IdUser select a;
+                    if (x.IdFriend != current_user)
+                        assignUser = from a in context1.Users where a.Id == x.IdFriend select a;
+                    foreach (var item in assignUser)
+                        allUsers.Add(new ApplicationUser { Id = item.Id, Name = item.Name, Surname = item.Surname, Image = item.Image });
                 }
                 i++;
                 if (i == userCount || i == startRecord + userPerPage) break;

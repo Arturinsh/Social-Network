@@ -16,6 +16,8 @@ namespace MVC_WEB_Page.Models
         /*Modifications start */
            //Add user birthdate
           [Required]
+          [DataType(DataType.DateTime)]
+          [DateValidator(ErrorMessage = "Wrong birth date")]
           public DateTime BirthDate { get; set; }
           [Required]
           [StringLength(15, ErrorMessage = "The name must be at least 3 characters long.", MinimumLength = 3)]
