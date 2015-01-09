@@ -427,7 +427,29 @@ namespace MVC_WEB_Page.Controllers
             else
                 return PartialView("_ProfileGImageView", new UserView() { gallery = image, user = context.Users.Where(d => d.UserName == UserName).ToList().First() });
         }
-
+        public PartialViewResult deleteComment(int id)
+        {
+            var context = new ApplicationDbContext();
+            var imgId = context.Comments.Where(d => d.Id == id).ToList().First().IdImage;
+            var userId = context.Galleries.Where(d => d.Id == imgId).ToList().First().UserId;
+            if(User.Identity.GetUserId() == userId){
+                var comments = context.Comments.Where(d => d.Id == id);
+                context.Comments.RemoveRange(comments);
+                context.SaveChanges();
+                }
+            var currentUsersID = User.Identity.GetUserId();
+            var gallery = from c in db.Galleries
+                          where c.UserId == currentUsersID
+                          select c;
+            List<UsersGalleries> imgs = gallery.ToList();
+            List<ImageView> images = new List<ImageView>();
+            foreach (var x in imgs)
+            {
+                var cmm = db.Comments.Where(d => d.IdImage == x.Id).ToList();
+                images.Add(new ImageView() { image = x, comments = cmm });
+            }
+            return PartialView("_ImageView", images);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

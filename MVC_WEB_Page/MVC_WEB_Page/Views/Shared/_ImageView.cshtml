@@ -81,8 +81,9 @@
     <div class="col-md-2 leftBlock">
     </div>
     <div class="col-md-8">
-        <img src="~/Content/Images/@User.Identity.Name.ToString()/@Model.First().image.Image" class="img-responsive galleryBigImage" />
-    </div>
+        <a href="~/Content/Images/@User.Identity.Name.ToString()/@Model.First().image.Image" target="_blank">
+        <img src="~/Content/Images/@User.Identity.Name.ToString()/@Model.First().image.Image" class="img-responsive galleryBigImage" /></a>
+</div>
     <div class="col-md-2 rightBlock">
     </div>
 
@@ -108,9 +109,10 @@
             @foreach (var item in Model.First().comments)
             {
                 <div class="list-group-item">
-                    <a href="@Url.Action( "ReturnUser","Home", new { user = item.IdUser})">
-                        <h4 class="list-group-item-heading" id="commenId">@item.SenderName</h4>
-                    </a>
+                    <a href="#" onclick="deleteComment('@item.Id');" data-toggle="modal" data-target="#deleteComment"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a href="@Url.Action( "ReturnUser","Home", new { user = item.IdUser})">
+                            <h4 class="list-group-item-heading" id="commenId">@item.SenderName</h4>
+                        </a>
                     <h5 class="list-group-item-heading">@item.date</h5>
                     <p class="list-group-item-text">@item.Content</p>
                 </div>
@@ -125,7 +127,7 @@
     </div>
 
     <div class="col-md-12 centralBlock">
-        @if (Model.First().comments.Count > 0)
+        @if (Model.First().comments.Count > 1)
         {
             <div class="col-md-2 leftBlock">
             </div>

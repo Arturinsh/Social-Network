@@ -9,6 +9,23 @@
 <head>
     <title>Gallery</title>
     <script>
+        function load_image(id, ext) {
+            if (validateExtension(ext) == false) {
+                alert("Upload only JPEG, JPG, PNG format ");
+                document.getElementById("imagePreview").innerHTML = "";
+                document.getElementById("file").focus();
+                return;
+            }
+        }
+
+        function validateExtension(v) {
+            var allowedExtensions = new Array("jpg", "JPG", "jpeg", "JPEG","PNG","png");
+            for (var ct = 0; ct < allowedExtensions.length; ct++) {
+                sample = v.lastIndexOf(allowedExtensions[ct]);
+                if (sample != -1) { return true; }
+            }
+            return false;
+        }
         $(document).ready(function () {
             $('#checkActive').change(function () {
                 if ($(this).is(":checked")) {
@@ -56,6 +73,25 @@
                         $("#DeleteYes").hide();
                         $("#imageView").hide();
                         $("#imageName").text("Image " + name + " deleted!");
+                    }
+                });
+            };
+        }
+        function deleteComment(ID) {
+            $('#commentName').text("Do you want to delete comment?");
+            $("#DeleteCommentYes").show();
+            document.getElementById("DeleteCommentYes").onclick = function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("deleteComment", "Gallery")',
+                    type: "post",
+                    data: {
+                        id: ID
+                    },
+                    success: function (data) {
+                        $("#DeleteCommentYes").hide();
+                        $('#commentName').text("Comment deleted!");
+                        $("#imageView").html(data);
                     }
                 });
             };
@@ -151,6 +187,22 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteComment" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-danger" id="myModalLabel">Delete Comment</h4>
+                </div>
+                <div class="modal-body">
+                    <h3 id="commentName" class="text-danger">Do you want to delete comment?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary " id="DeleteCommentYes">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="uploadDialog" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -168,7 +220,7 @@
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
-                                    Browse… <input type="file" id="imgFile" name="picture">
+                                    Browse… <input type="file" id="imgFile" name="picture" accept="image/*" required="required" onchange="load_image(this.id,this.value)">
                                 </span>
                             </span>
                             <input type="text" class="form-control" readonly="">
